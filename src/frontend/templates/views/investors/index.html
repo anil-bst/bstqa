@@ -1,0 +1,34 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/seo-urls data.seoUrlsData}}
+    {{> common/stylesheets }}
+    <link href="/node-static/css/investors.css" rel="stylesheet" />
+    {{> common/scripts locale}}
+</head>
+
+<body class='{{bodyClass}}'>
+    {{> common/noscript}}
+    {{> common/header data.header}}
+    <section class="main-container investors-wrapper">
+        <div class="gif-wrapper">
+            <figure>
+                <img src="https://cdn.game.tv/investors-banner.png" class="hero-banner" />
+            </figure>
+        </div>
+        <div class="upper-section-bg">
+            <img class="pc-visible" src="https://cdn.game.tv/bg-element.png" />
+            <img class="mob-visible" src="https://cdn.game.tv/bg-element-mobile.png" />
+        </div>
+        <div class="container">
+            <h2 class="heading">{{data.heading}}</h2>
+            <p>
+                {{data.content}}
+            </p>
+            <a class="view-team theme-btn theme-btn-solid" href="{{data.teamLink}}">
+                {{data.buttonText}}
+            </a>
+        </div>
+    </section>
+    {{> common/footer data.footer}}
+    <script src="/node-static/js/common/main.js"></script>
+</body>

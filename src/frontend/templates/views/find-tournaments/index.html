@@ -1,0 +1,116 @@
+<head>
+  {{> common/metatags data.metadata}}
+  {{> common/seo-pagination data}}
+  {{> common/stylesheets }}
+  <link href="/node-static/css/find-tournaments.css" rel="stylesheet" />
+  {{> common/scripts locale}}
+</head>
+
+{{#with data}}
+
+<body class='{{bodyClass}}' data-source={{tournaments.source}}>
+  {{> common/noscript}}
+  {{> common/header header}}
+  <section class="main-container find-tournaments" data-page={{tournaments.metaData.page}}  data-cursor= {{tournaments.metaData.cursor}}>
+    <section class="search-section-wrapper">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="heading-group">
+          <h1 class="heading">{{ heading }}</h1>
+          <p class="seacth-info-desc">{{content}}</p>
+        </div>
+        <div class="search-form-wrapper js-search-tournaments">
+            {{> common/search-tournaments}}
+        </div>
+        <div class="tournament-info">
+          <p>{{gameInfo.title}}</p>
+          <a href="{{gameInfo.linkUrl}}">{{gameInfo.content}}</a>
+        </div>
+        <div class="scroll-wrapper">
+            <a href="javascript:void(0)" class="scroll-down mob-visible"></a>
+        </div>
+        
+      </div>
+    </section>
+    <section class="games-section">
+      <div class="container">
+        <div class="heading-group-block">
+          <h2 class="section-heading">{{topGameSection.title}}</h2>
+        </div>
+        <div class="swiper-container">
+          <ul class="games-list swiper-wrapper">
+            {{#each games}}
+              <li class="game-item swiper-slide hvr-grow-shadow">
+                <a href="{{../locales}}/find-tournaments/{{gameId}}" data-locale="{{../locales}}">
+                  <img class="img-responsive mob-visible" src="{{this.media.mobile.stretchImageUrl}}" alt="{{this.name}}" />
+                  <img class="img-responsive pc-visible" src="{{this.media.default.stretchImageUrl}}" alt="{{this.name}}" />
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+          <div class="swiper-button swiper-button-prev"></div>
+          <div class="swiper-button swiper-button-next"></div>
+        </div>
+      </div>
+    </section>
+    {{> common/tournaments this }}
+  </section>
+  {{> common/footer footer}}
+  <script src="/node-static/js/find-tournaments/main.js"></script>
+  <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          {{#if locales}}
+          "item": "https://game.tv{{locales}}"
+          {{else}}
+          "item": "https://game.tv"
+          {{/if}}
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tournaments",
+          {{#if locales}}
+          "item": "https://www.game.tv{{locales}}/find-tournaments"
+          {{else}}
+          "item": "https://www.game.tv/find-tournaments"
+          {{/if}}
+        }]
+      },
+      {{#with (ListItem 0 3 tournaments.data) as |top3Tournaments| }}
+      {{#each top3Tournaments}}
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          "name": "{{name}}",
+          "startDate": "{{tournamentStartDate}}",
+          "endDate": "{{AddDays tournamentStartDate 1}}",
+          "location": {
+            "@type": "Place",
+            "name": "{{countryNameMap geo}}",
+            "url": "{{esportsUrl}}",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "NA",
+              "addressRegion": "{{geo}}"
+            }
+          },
+          "image": [
+            "{{media.default.bannerUrl}}"
+          ],
+          "description": "{{StringModifyForLDJson description 0 150 }}",
+          "performer": {
+            "@type": "PerformingGroup",
+            "name": "{{#if createdBy.userName}}{{createdBy.userName}}{{else}}NA{{/if}}"
+          }
+        }{{#if @last}}{{else}},{{/if}}
+      {{/each}}
+      {{/with}}
+    ]
+  </script>
+</body>
+{{/with}}

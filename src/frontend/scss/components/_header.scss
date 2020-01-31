@@ -1,0 +1,450 @@
+@import 'language-selector';
+@import './autocomplete-suggestions';
+
+header,
+footer {
+  width: 100%;
+  height: 100px;
+  background-color: #1c252c;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+  .container {
+    height: 100%;
+
+    .header-content,
+    .footer-menu-list {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        padding: 5px 0;
+        position: relative;
+        z-index: 333;
+        cursor: pointer;
+
+        .logo-img {
+          max-height: 40px;
+          max-width: 40px;
+        }
+      }
+
+      .menu-links {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        right: 0;
+
+        .menu-link {
+          color: #83939f;
+          font-size: 14px;
+          line-height: 16px;
+          margin-left: 24px;
+          position: relative;
+          cursor: pointer;
+          padding: 12px 0;
+
+          &:hover {
+            color: #fff;
+          }
+
+          &.external {
+            color: #426bff;
+          }
+
+          &.menu-box {
+            border: 1px solid #6d7c88;
+            padding: 12px 16px;
+          }
+
+          &.active {
+            font-weight: 500;
+            color: #a3afb8;
+
+            &::before {
+              content: '';
+              width: 24px;
+              height: 2px;
+              background-color: #426bff;
+              bottom: 5px;
+              left: 0;
+              position: absolute;
+            }
+          }
+
+          &.nav-search-block {
+            background: url(https://cdn.game.tv/tournaments/search-icon.png) no-repeat 0 12px;
+            display: inline-block;
+            width: 16px;
+            height: 31px;
+            background-size: contain;
+          }
+        }
+      }
+
+      .header-search-form-wrapper {
+        display: none;
+        max-width: 360px;
+        width: 100%;
+        position: absolute;
+        top: 100px;
+        left: 580px;
+        background-color: #161d22;
+        border: 1px solid #6d7c88;
+        padding: 19px 16px;
+
+        &.open {
+          display: block;
+        }
+
+        .autocomplete-suggestions {
+          margin-top: 1px;
+        }
+
+        .search-form {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .search-control {
+            width: 100%;
+            color: #a4aeb6;
+            font-size: 16px;
+            line-height: 19px;
+            background-color: transparent;
+            border: none;
+          }
+
+          .btn-search {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  header {
+    .container {
+      .header-content {
+        .menu-links {
+          left: 0;
+          right: inherit;
+
+          .language-selector {
+            margin-right: 32px;
+            margin-left: 0;
+
+            .selected-lang {
+              margin-left: 15px;
+              margin-right: 0;
+            }
+
+            .language-selector-btn svg {
+              right: inherit;
+              left: 10px;
+            }
+          }
+        }
+
+        .header-search-form-wrapper {
+          left: inherit;
+          right: 840px;
+        }
+      }
+    }
+  }
+}
+
+.sticky-header .container .header-content .menu-links .menu-link.menu-box {
+  background: #426bff;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.header-section {
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  background-color: #1c252c;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+@media (min-width: 768px) {
+  [lang="ja"] header .container .header-content .menu-links .menu-link {
+    font-size: 13px;
+    margin-left: 25px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .find-tournaments .nav-search-icon {
+    display: none !important;
+  }
+
+  header.header-section {
+    .container {
+      padding-left: 20px;
+      padding-right: 20px;
+
+      .header-content {
+        width: 100%;
+        position: static;
+
+        .mob-visible {
+          display: inherit !important;
+        }
+
+        .pc-visible {
+          display: none !important;
+        }
+
+        .language-selector-container {
+          position: absolute;
+          left: 30px;
+        }
+
+        .nav-search-icon {
+          background: url(https://cdn.game.tv/tournaments/search-icon.png) no-repeat center;
+          display: inline-block;
+          width: 30px;
+          height: 31px;
+          position: absolute;
+          right: 57px;
+          background-size: 20px;
+        }
+
+        .menu-bar {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          justify-content: center;
+          padding-left: 20px;
+          padding-right: 20px;
+          position: absolute;
+          right: 0;
+        }
+
+        span.bar {
+          width: 25px;
+          height: 2px;
+          margin-bottom: 5px;
+          border-radius: 0;
+          background: #83939f;
+          display: block;
+          transition: 0.5s;
+        }
+
+        .menu-bar.shown span.bar {
+          background: #181818;
+        }
+
+        .menu-bar.active-menu span.bar {
+          background: #fff;
+        }
+
+        .active-menu .b1 {
+          transform: rotate(-45deg) translate(-9px, 7px);
+        }
+
+        .active-menu .b2 {
+          opacity: 0;
+        }
+
+        .active-menu .b3 {
+          transform: rotate(45deg) translate(-3px, 0);
+        }
+
+        .menu-links {
+          display: none;
+          padding-bottom: 20px;
+          position: relative;
+
+          &.active-menu {
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: block;
+            background-color: #1c262d;
+          }
+
+          .li-nav-search-block {
+            display: none;
+          }
+
+          .menu-link {
+            width: 100%;
+            display: block;
+            margin: 0;
+
+            &.nav-search-block {
+              background-size: 20px;
+
+              &::before {
+                background-color: transparent;
+              }
+            }
+          }
+        }
+
+        .logo {
+          width: 32px;
+          height: 32px;
+
+          img {
+            max-height: 32px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  header.header-section {
+    height: 48px;
+
+    .container {
+      padding-left: 20px;
+      padding-right: 20px;
+
+      .header-content {
+        width: 100%;
+        position: static;
+
+        .menu-bar {
+          width: 32px;
+          height: 32px;
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+          justify-content: center;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        span.bar {
+          width: 25px;
+          height: 2px;
+          margin-bottom: 5px;
+          border-radius: 0;
+          background: #83939f;
+          display: block;
+          transition: 0.5s;
+        }
+
+        .menu-bar.shown span.bar {
+          background: #181818;
+        }
+
+        .menu-bar.active-menu span.bar {
+          background: #fff;
+        }
+
+        .active-menu .b1 {
+          transform: rotate(-45deg) translate(-9px, 7px);
+        }
+
+        .active-menu .b2 {
+          opacity: 0;
+        }
+
+        .active-menu .b3 {
+          transform: rotate(45deg) translate(-3px, 0);
+        }
+
+        .menu-links {
+          display: none;
+          padding-top: 50px;
+          padding-bottom: 20px;
+          position: relative;
+
+          &.active-menu {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            height: 100vh;
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: block;
+            background-color: #1c262d;
+          }
+
+          .menu-link {
+            width: 100%;
+            display: block;
+            margin: 0;
+          }
+
+          .menu-item {
+            &.li-menu-box {
+              position: absolute;
+              // bottom: 20px;
+              bottom: 12%;
+              right: 20px;
+              left: 20px;
+
+              a {
+                text-align: center;
+                background-color: #426bff;
+                box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+                font-size: 20px;
+                font-weight: 500;
+                line-height: 24px;
+                padding: 17px;
+                border: none;
+                color: #fff !important;
+              }
+            }
+          }
+        }
+
+        .logo {
+          width: 32px;
+          height: 32px;
+
+          img {
+            max-height: 32px;
+          }
+        }
+      }
+    }
+  }
+
+  .sticky-header .container .header-content .menu-links .menu-link.menu-box {
+    background: transparent;
+    border: none !important;
+    color: #83939f !important;
+    font-weight: normal;
+    padding-left: 0;
+  }
+}

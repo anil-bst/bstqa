@@ -1,0 +1,64 @@
+<head>
+  {{> common/metatags data.metadata}}
+  {{> common/seo-urls data.seoUrlsData}}
+  {{> common/stylesheets }}
+  <link href="/node-static/css/how-to-use-tourney.css" rel="stylesheet" />
+  {{> common/scripts locale}}
+</head>
+{{#with data}}
+
+<body class='{{bodyClass}}'>
+  {{> common/noscript}}
+  {{> common/header header}}
+  <div class="how-to-use-container">
+    <section class="how-to-use-tourney">
+      <div class="container">
+        <div class="side-navigation">
+          <p class="selected-nav"></p>
+          <ul class="navigation-list">
+            {{#each navigationSections}}
+            <li {{#if isActive}} class="active" {{/if}} data-target="{{id}}">{{title}}</li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="navigation-content">
+          {{#each navigationSections}}
+          <div class="content-wrapper {{#if isActive}}active{{/if}}" id="{{id}}">
+            <h1 class="heading">{{title}}</h1>
+            <ul class="content-list">
+              {{{description}}}
+              {{#each navSectionItems}}
+              <li>
+                <p>{{{title}}}</p>
+                <div class="inner-content">
+                  {{#each innerContentList}}
+                  {{#if imageUrl}}
+                  <figure class="content-image">
+                    {{#if imageCaption }}<figcaption>{{{imageCaption}}}</figcaption> {{/if}}
+                    <div class="img-block">
+                      <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}">
+                    </div>
+                  </figure>
+                  {{/if}}
+                  {{#if steps}}
+                  <ul>
+                    {{#each steps}}
+                    <li>{{{this}}}</li>
+                    {{/each}}
+                  </ul>
+                  {{/if}}
+                  {{/each}}
+                </div>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+  </div>
+  {{> common/footer footer}}
+  <script src="/node-static/js/how-to-use-tourney/main.js"></script>
+</body>
+{{/with}}

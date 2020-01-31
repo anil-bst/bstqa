@@ -1,0 +1,324 @@
+<head>
+  {{> common/metatags data.metadata}}
+  {{> common/seo-urls data.seoUrlsData}}
+  {{> common/stylesheets }}
+  <link href="/node-static/css/home.css" rel="stylesheet" />
+  {{> common/scripts locale}}
+</head>
+{{#with data}}
+
+<body class='{{bodyClass}}' data-source={{source}}>
+  {{> common/noscript}}
+  {{> common/header header}}
+  <div class="main-container">
+    {{#with heroSection}}
+    <section class="meet-tourney-section">
+      <video autoplay muted loop id="tourney_video" class="tourney-hero-video" playsinline>
+        <source src="https://cdn.game.tv/videos/meet-tourney/tourney-video.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+      <video autoplay muted loop id="tourney_video_ar" class="tourney-hero-video {{../../locale}}" playsinline>
+        <source src="https://cdn.game.tv/videos/meet-tourney/tourney-video-ar.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+      <img class="img-responsive tourney-hero-img"
+        src="https://cdn.game.tv/videos/meet-tourney/tourney-animation.gif">
+      <div class="trapezium-shape"></div>
+      <div class="hero-banner container">
+        <div class="hero-banner-content">
+          <h1 class="hero-heading {{extraHeadingClasses}}">{{heading}}</h1>
+          <p class="hero-content {{extraContentClasses}}">{{content}}</p>
+          <div class="app-links-button-group">
+            {{#each appLaunchButtons}}
+            <div class="button-section hvr-float-shadow {{extraClasses}}">
+              <a href="{{link}}" target="_blank">
+                {{#if logoUrl}}
+                <img src="{{logoUrl}}" alt='{{logoAltText}}' class='{{logoExtraClasses}}' />
+                {{/if}}
+                {{name}}
+              </a>
+            </div>
+            {{/each}}
+          </div>
+          <a class="read-more" id="discover_more">{{discoverButtonTitle}}</a>
+        </div>
+      </div>
+    </section>
+    {{/with}}
+    {{#with whyTourneySection}}
+    <section class="why-tourney" id="why_tourney">
+      <div class="container">
+        <h2 class="heading">{{heading}}</h2>
+        <div class="why-tourney-content">
+          <p class="content">{{content}}
+          </p>
+          <figure class="gametv-logo">
+            <video autoplay muted loop id="why_tourney_video" class="why-tourney-video" playsinline>
+              <source src="https://cdn.game.tv/videos/meet-tourney/why-tourney-new.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </figure>
+        </div>
+      </div>
+    </section>
+    {{/with}}
+    {{#with uHostSection}}
+    <section class="uHost-section">
+      <div class="container">
+        <h3 class="heading">{{heading}}</h3>
+        <p class="sub-heading">{{content}}</p>
+        <ul class="uHost-content">
+          <li class="uHost-item">
+            <ul class="uHost-sub-list">
+              {{#each hostTypes }}
+              <li>
+                <figure class="uHost-image">
+                  <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}" />
+                </figure>
+                <div class="uHost-sub-content">
+                  <h4 class="heading">{{heading}}</h4>
+                  <p class="content">{{content}}</p>
+                </div>
+              </li>
+              {{/each}}
+            </ul>
+            <figure class="figure-item">
+              <img class="img-responsive" src="https://cdn.game.tv/images/meet-tourney/uHost-banner.png">
+            </figure>
+          </li>
+          <li class="uHost-item">
+            <figure class="figure-item">
+              <h3>{{templateSection.heading}}</h3>
+              <img class="img-responsive" src="{{templateSection.imageUrl}}" alt="{{templateSection.imageAlt}}" />
+            </figure>
+            <div class="content-section">
+              <h3>{{templateSection.heading}}</h3>
+              <p class="content">{{templateSection.content}}</p>
+            </div>
+          </li>
+          <li class="uHost-item">
+            <div class="content-section">
+              <h3>{{messagingSection.heading}}</h3>
+              <p class="content">{{messagingSection.content}}</p>
+            </div>
+            <figure class="figure-item">
+              <h3>{{messagingSection.heading}}</h3>
+              <img class="img-responsive" src="{{messagingSection.imageUrl}}" alt="{{messagingSection.imageAlt}}" />
+            </figure>
+          </li>
+        </ul>
+      </div>
+    </section>
+    {{/with}}
+
+    <section class="perks">
+      <div class="container">
+        {{#with perksSection}}
+        <h3 class="heading">{{heading}}</h3>
+        <p class="sub-heading">{{content}}</p>
+        <ul class="perks-list">
+          {{#each perksList}}
+          <li class="perks-item">
+            <figure>
+              <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}" />
+            </figure>
+            <p class="content">
+              {{{content}}}
+            </p>
+          </li>
+          {{/each}}
+        </ul>
+        {{/with}}
+        {{#with graphsSection}}
+        <h3 class="graph-section-heading heading">
+          {{heading}}
+        </h3>
+        <p class="graph-section-sub-heading sub-heading sub-heading1">{{content}}</p>
+        {{> common/graph-content graphContent}}
+        {{/with}}
+      </div>
+    </section>
+    {{#with tourneyEmotesSection}}
+    <section class="tourney-emotes">
+      <video autoplay muted loop id="tourney_emotes" class="tourney-emotes-video" playsinline>
+        <source src="https://cdn.game.tv/videos/meet-tourney/tourney-emotes.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+      <div class="container">
+        <h2 class="heading">{{heading}}</h2>
+        <p class="sub-heading">{{{content}}}</p>
+      </div>
+    </section>
+    {{/with}}
+    {{#with profilesSection}}
+    <section class="profile-section">
+      <div class="container">
+        <ul class="content-list">
+          {{#each items}}
+          <li class="graph-item {{#if reverse}} flex-reverse {{/if}}">
+            <figure>
+              <h3 class="heading">{{heading}}</h3>
+              <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}">
+            </figure>
+            <div class="content-section">
+              <h3 class="heading">{{heading}}</h3>
+              <p class="content">{{content}}</p>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </section>
+    {{/with}}
+    {{#with tourneyAiSection}}
+    <section class="tourney-ai">
+      <div class="container">
+        <h2 class="heading mobile-only">{{heading}}</h2>
+        <div class="content-section">
+          <div class="content">
+              <h2 class="heading desktop-only">{{heading}}</h2>
+            <p>{{content1}} </p>
+            <p class="content-small">{{content2}}</p>
+          </div>
+          <figure class="ai-image">
+            <!-- <img class="img-responsive" src="https://cdn.game.tv/images/meet-tourney/tourney-ai.png"> -->
+            <video autoplay muted loop id="tourney_ai" class="tourney-ai-video" playsinline>
+              <source src="https://cdn.game.tv/videos/meet-tourney/tourney-ai-new1.mp4" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          </figure>
+        </div>
+      </div>
+    </section>
+    {{/with}}
+    {{#with leaguesSection}}
+    <section class="leagues-section">
+      <div class="container">
+        <ul class="content-list">
+          {{#each items}}
+          <li class="graph-item {{#if reverse}} flex-reverse {{/if}}">
+            <figure>
+              <h3 class="heading">{{heading}}</h3>
+              <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}">
+            </figure>
+            <div class="content-section">
+              <h3 class="heading">{{heading}}</h3>
+              <p class="content">{{content}}</p>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+    </section>
+    {{/with}}
+    {{#with getBoostedSection}}
+    <section class="get-boosted-section" style="background: #1c252c url({{backgroundImgUrl}}) no-repeat top right; background-size: contain;" >
+      <div class="container">
+          <h2 class="heading">{{heading}}</h2>
+          <p class="sub-heading">{{content}}</p>
+          {{#with getBoostedLevels}}
+          <div class="sub-section row">
+            {{#with perks}}
+            <div class="sub-section-1 col-4">
+              <div class="sub-section-heading">
+                <span><figure><img src="{{mainIconUrl}}" /></figure>{{heading}}</span>
+                <span class="sub-section-status">{{mainlabel}}</span>
+              </div>
+              <div class="sub-section-description">
+                <div class="sub-section-subheading">{{subheading}}</div>
+                <ul>
+                  {{#each items}}
+                  <li>
+                    <figure class="icons"><img src={{iconUrl}} /></figure>
+                    <p>{{label}}</p>
+                  </li>
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            {{/with}}
+            {{#with boostedServer}}
+            <div class="sub-section-2 col-8">
+              <div class="sub-section-heading">
+                <span><figure><img src="{{mainIconUrl}}" /></figure>{{heading}}</span>
+              </div>
+              <div class="sub-section-description">
+                <div class="sub-section-subheading">{{subheading}}</div>
+                <ul>
+                  {{#each items}}
+                  <li>
+                    <figure class="icons"><img src={{iconUrl}} /></figure>
+                    <p>{{label}}</p>
+                  </li>
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            {{/with}}
+          </div>
+          {{/with}}
+        </div>
+      </section>
+      {{/with}}
+    {{#with prizeSponsorshipSection}}
+      <section class="prize-sponsorship-section leagues-section">
+          <div class="container">
+              <ul class="content-list">
+                {{#each items}}
+                <li class="graph-item">
+                  <figure>
+                    <h3 class="heading">{{heading}}</h3>
+                    <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}">
+                  </figure>
+                  <div class="content-section">
+                    <h3 class="heading">{{heading}}</h3>
+                    <p class="content">{{content}}</p>
+                  </div>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+      </section>
+      {{/with}}
+      
+    {{#with availableGamesSection}}
+    <section class="available-games">
+      <div class="container">
+        <h3 class="heading">{{heading}}</h3>
+        <p class="sub-heading">{{content}}</p>
+        <div class="game-list-wrapper" id="game_list">
+          <ul class="games-list">
+            {{#each ../games}}
+            <li class="games-item">
+              <a href="{{../../gamelink}}/{{slug}}">
+                <figure>
+                  <img class="img-responsive" src="{{media.default.logoUrl}}" alt="{{name}} Tournaments">
+                </figure>
+                <figcaption class="game-name">{{name}} Tournaments</figcaption>
+              </a>
+              
+            </li>
+            {{/each}}
+          </ul>
+          <div class="view-more" id="view_more">{{viewMoreGames}}</div>
+        </div>
+        <div class="app-links-button-group">
+          {{#each appLaunchButtons}}
+          <div class="button-section hvr-float-shadow {{extraClasses}}">
+            <a href="{{link}}" target="_blank">
+              {{#if logoUrl}}
+              <img src="{{logoUrl}}" alt='{{logoAltText}}' class='{{logoExtraClasses}}' />
+              {{/if}}
+              {{name}}
+            </a>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+    {{/with}}
+  </div>
+  {{> common/footer footer}}
+  <script src="/node-static/js/home/main.js"></script>
+</body>
+{{/with}}

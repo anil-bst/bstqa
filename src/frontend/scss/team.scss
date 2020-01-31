@@ -1,0 +1,163 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/buttons';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/language-selector';
+
+.tourney-container {
+  .heading {
+    font-size: 20px;
+    font-weight: 900;
+    padding: 0 32px;
+    margin-top: 30px;
+    color: $color__secondary;
+    position: relative;
+
+    &::before {
+      width: 4px;
+      position: absolute;
+      left: 20px;
+      background: linear-gradient(45deg, #656cff 0%, #b671ff 100%);
+      border-radius: 2.5px;
+      content: "";
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  .team-list {
+    margin-top: 20px;
+    padding-left: 15px;
+
+    > li {
+      background-color: #fff;
+      height: 112px;
+      padding: 0;
+      margin-bottom: 16px;
+
+      figure {
+        display: table;
+
+        .user-img {
+          max-width: 112px;
+          max-height: 112px;
+          display: table-cell;
+          border-radius: 3px;
+        }
+
+        figcaption {
+          width: 75%;
+          padding-left: 15px;
+          display: table-cell;
+          font-size: 16px;
+          line-height: 20px;
+          vertical-align: middle;
+
+          .team-user-info {
+            li {
+              padding-top: 5px;
+              padding-bottom: 5px;
+              color: #6d7278;
+              font-size: 12px;
+              letter-spacing: -0.2px;
+              line-height: 16px;
+            }
+
+            .user-name {
+              font-size: 16px;
+              font-weight: 600;
+              color: $color__secondary;
+            }
+
+            .user-id {
+              padding-left: 24px;
+              position: relative;
+
+              &::before {
+                content: "";
+                background: url(https://cdn.game.tv/sprite.png) no-repeat;
+                height: 16px;
+                width: 16px;
+                background-position: -104px -70px;
+                position: absolute;
+                left: 0;
+              }
+            }
+
+            .user-location {
+              padding-left: 24px;
+              position: relative;
+
+              &::before {
+                content: "";
+                background: url(https://cdn.game.tv/sprite.png) no-repeat;
+                height: 16px;
+                width: 16px;
+                background-position: -64px -70px;
+                position: absolute;
+                left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .tourney-container {
+    .heading {
+      padding: 0 15px;
+
+      &::before {
+        left: 0;
+        top: 0 !important;
+      }
+    }
+
+    .team-list {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 900px;
+      padding-left: 0;
+      margin: 0 auto;
+
+      > li {
+        width: 50%;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  .tourney-container {
+    .heading {
+      &::before {
+        left: inherit;
+        right: 0;
+      }
+    }
+
+    .team-list > li {
+      figure figcaption {
+        padding-left: 0;
+        padding-right: 15px;
+
+        .team-user-info .user-id,
+        .team-user-info .user-location {
+          padding-left: 0;
+          padding-right: 24px;
+
+          &::before {
+            left: inherit;
+            right: 0;
+          }
+        }
+      }
+    }
+  }
+}

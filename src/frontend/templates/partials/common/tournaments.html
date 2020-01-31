@@ -1,0 +1,170 @@
+<section class="tournaments">
+    <div class="container">
+      <div class="heading-filter-section">
+        <h2 class="heading section-heading"><span class="count-tournaments">{{commaSeparatedStr tournaments.metaData.count}}</span> {{tournamentTitle}}</h2>
+        <span class="filter-icon"><img src="https://cdn.game.tv/create_tournament/filter.png" /></span>
+        {{#with tournaments.metaData}}
+        <div class="filters">
+          <div class="mobile-only">
+              <!-- Tab links -->
+              <div class="title"><span>Filters</span><span class="close-filter">X</span></div>
+              <div class="tab">
+                <button class="tablinks geo-filters filter-item active" data-tab="geo">geo</button>
+                <button class="tablinks status-filter filter-item" data-tab="status">status</button>
+                <button class="tablinks lang-filter filter-item" data-tab="lang">lang</button>
+              </div>
+                
+                <!-- Tab content -->
+                <div class="tabcontent-wrapper">
+                  <div id="geo" class="tabcontent" style="display: block;">
+                    <ul class="geo-list filter-list">
+                        <li class="country-item selected-filter-geo" data-geo="all"><span class="country-f-flag"  style="background-image:url(https://cdn.game.tv/locales/MAP.png);"></span>All</li>
+                      {{#each geo}}
+                        <li class="country-item" data-geo="{{this}}"><span class="country-f-flag" style="background-image:url(https://cdn.game.tv/locales/{{ConvertToUppercase this}}.png);"></span>{{countryNameMap this}}</li>
+                      {{/each}}
+                    </ul>
+                  </div>
+                  
+                  <div id="status" class="tabcontent">
+                      <ul class="status-list filter-list">
+                          <li class="tourn-f-item selected-filter-status" data-status="all">All</li>
+                        {{#each status}}
+                          <li class="tourn-f-item" data-status="{{this}}">{{this}}</li>
+                        {{/each}}
+                      </ul>
+                  </div>
+                  
+                  <div id="lang" class="tabcontent">
+                    <ul class="lang-list filter-list">
+                        <li class="lang-item selected-filter-lang" data-lang="all">All</li>
+                      {{#each lang}}
+                        <li class="lang-item" data-lang="{{this}}">{{languageFilter this}}</li>
+                      {{/each}}
+                      </ul>
+                  </div>
+                </div>
+                <div class="filter-footer">
+                  <button class="filter-reset">Reset</button>
+                  <button class="filter-save">Save</button>
+                </div>
+          </div>
+          <div class="pc- desktop-only">
+              <div class="country-specific-filters filter-item">
+                  <button class="country-specific-btn select-btn" data-geo="all"><span class="selected-flag country-f-flag" style="background-image:url(https://cdn.game.tv/locales/{{ConvertToUppercase 'map'}}.png);"></span>All  Regions</button>
+                  <ul class="country-list filter-list scrollbar">
+                      <li class="country-item" data-geo="all"><span class="country-f-flag"  style="background-image:url(https://cdn.game.tv/locales/{{ConvertToUppercase 'map'}}.png);"></span>All  Regions</li>
+                      {{#each geo}}
+                        <li class="country-item" data-geo="{{this}}"><span class="country-f-flag" style="background-image:url(https://cdn.game.tv/locales/{{ConvertToUppercase this}}.png);"></span>{{countryNameMap this}}</li>
+                      {{/each}}
+                  </ul>
+                </div>
+                <div class="tournament-type-filter filter-item">
+                    <button class="tournament-specific-btn select-btn" data-status="all">all Tournaments</button>
+                    <ul class="tournament-filter-list filter-list scrollbar">
+                        <li class="tourn-f-item" data-status="all">All Tournaments</li>
+                        {{#each status}}
+                          <li class="tourn-f-item" data-status="{{this}}">{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <div class="locale-specific-filter scrollbar filter-item">
+                    <button class="locale-specific-btn select-btn" data-lang="all">All Languages</button>
+                    <ul class="locale-list filter-list scrollbar">
+                        <li class="lang-item" data-lang="all">All Languages</li>
+                      {{#each lang}}
+                        <li class="lang-item" data-lang="{{this}}">{{languageFilter this}}</li>
+                      {{/each}}
+                    </ul>
+                </div>
+          </div>
+        </div>
+        {{/with}}
+      </div>
+      <div class="tournaments-list-details">
+        <div class="empty-state {{#if tournaments.data }}{{else}}show{{/if}}">
+          {{#with gameInfo}}
+          <div class="wrapper">
+            <div class="content-1">
+              <div class="image-wrapper">
+                  <img src="https://cdn.game.tv/create_tournament/empty_state_copy.png" />
+              </div>
+              <div class="description">
+                <p>{{title}}</p>
+                <a href="{{linkUrl}}">{{content}}</a>
+              </div>
+            </div>
+            <div class="content-2">
+                <div class="image-wrapper">
+                    <img src="https://cdn.game.tv/create_tournament/empty-state_search.png" />
+                </div>
+                <div class="description">
+                  <p>{{noTournamentsTitle}}</p>
+                  <button class="no-available-data">{{noTournamentsContent}}</button>
+                </div>
+            </div>
+          </div>
+          {{/with}}
+        </div>
+          <ul class="tournaments-list">
+              {{#each tournaments.data}}
+              <li class="tournament-item hvr-float-shadow">
+                <a href="/tournaments/{{GetTournamentUrl esportsUrl}}">
+                  <figure class="tournament-image">
+                    {{#if primaryPkg}}
+                      <img src='https://cdn.game.tv/game-tv-content/images/default/game_logo/en/{{primaryPkg}}.png' alt="{{game.name}}">
+                    {{/if}}
+                    {{#if ../games/primaryPkg}}
+                      <img src='https://cdn.game.tv/game-tv-content/images/default/game_logo/en/{{../games/primaryPkg}}.png' alt="{{../game.name}}">
+                    {{/if}}
+                  </figure>
+                </a>
+                <div class="game-wrapper">
+                  <a href="{{../gamePageUrl}}/{{game.slug}}">
+                    <div class="game-icon">
+                      <img src="{{game.media.default.logoUrl}}" class="img-responsive" alt="{{game.name}}">
+                    </div>
+                    <span class="game-name">{{game.name}}</span>
+                  </a>
+                  <div class="country-flag">
+                    <img class="country-icon" src="https://cdn.game.tv/locales/{{StringSlice geo 0 2 }}.png">
+                    <p class="country-name">{{StringSlice adminLocale 0 2 }}</p>
+                  </div>
+                </div>
+                <a href="/tournaments/{{GetTournamentUrl esportsUrl}}">
+                  <div class="tournament-details">
+                    <div class="platform-details">
+                      <p class="platform">{{../platformStr}}</p>
+                      <span class="platform-icon {{platform}}"></span>
+                      <p class="discord-title">{{platform}}</p>
+                      <p class="versus">{{gameFormat}}</p>
+                    </div>
+                    <h3 class="game-title">{{name}}</h3>
+                    <div class="joining-info">
+                      <p class="join-date">{{DateFormat tournamentStartDate 'D MMM
+                        YY'}}</p>
+                      <p class="join-time">{{DateFormat tournamentStartDate 'h:mm' }} <span class="add-timezoneAbbr">{{TimeZone}}</span> </p>
+                      <span class="join-now" >{{../joinHeading}}</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              {{/each}}
+            </ul>
+
+            <div class="loader hide"><img src="https://cdn.game.tv/tourney-preloader.svg" class="img-responsive" alt="loading.."></div>
+            {{#if game.slug}}
+              <a href="/{{seoUrlsData.locale}}/find-tournaments/{{game.slug}}?page={{NextCount tournaments.metaData.page}}" class="view-more {{ShowViewMore tournaments.metaData.isLastBatch}}">
+            {{else}}
+              <a href="/{{seoUrlsData.locale}}/find-tournaments?page={{NextCount tournaments.metaData.page}}" class="view-more {{ShowViewMore tournaments.metaData.isLastBatch}}">
+            {{/if}}
+              <button class="view">{{viewMore}}</button>
+            </a>
+            <div class="game-info-details">
+              <p class="game-info">
+                  {{gameInfo.title}}
+              </p>
+                  <a class="create-own" href={{gameInfo.linkUrl}}>{{gameInfo.content}}</a>
+            </div>
+      </div>
+    </div>
+  </section>

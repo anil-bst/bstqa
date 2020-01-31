@@ -1,0 +1,64 @@
+version: "3.4"
+services:
+  # proxy: 
+  #   image: nginx:alpine
+  #   ports:
+  #     - 80:80
+  #   volumes: 
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #   restart: always
+  #   networks:
+  #     - application
+  server:
+    build: .
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules/
+    env_file: 
+      - ".env"
+    depends_on:
+    # - proxy
+      - mongo
+      - redis
+    links:
+      - mongo
+    command: npm run start:local
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    networks:
+      - application
+  redis:
+    image: redis:5
+    env_file: 
+      - ".env"
+    ports:
+      - "${REDIS_WRITE_PORT}:${REDIS_WRITE_PORT}"
+    networks:
+      - application
+  mongoclient:
+    restart: always
+    image: mongoclient/mongoclient:latest
+    ports:
+    - "8080:3000"
+    networks:
+      - application
+  mongo:
+    image: 'bitnami/mongodb:latest'
+    restart: always
+    ports:
+      - ${MONGO_PORT_NUMBER}:${MONGO_PORT_NUMBER}
+    env_file: 
+      - ".env"
+    environment:
+      - MONGODB_PORT_NUMBER=${MONGO_PORT_NUMBER}
+      - MONGODB_USERNAME=${MONGO_USERNAME}
+      - MONGODB_PASSWORD=${MONGO_PASSWORD}
+      - MONGODB_DATABASE=${MONGO_DATABASE}
+      - MONGODB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes: 
+      - ./mongodb:/bitnami
+    networks:
+      - application
+networks:
+  application:
+    driver: bridge

@@ -1,0 +1,21 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/stylesheets }}
+    <link href="/node-static/css/404.css" rel="stylesheet" />
+</head>
+{{#with data}}
+
+<body class='{{bodyClass}}'>
+    {{> common/noscript}}
+    {{> common/header header}}
+    <section class="main-container page-not-found">
+        <h1>
+            Oh no! It's a
+            <p class="err-tag">404</p>
+            ...
+        </h1>
+    </section>
+    {{> common/footer footer}}
+    <script src="/node-static/js/common/main.js"></script>
+</body>
+{{/with}}

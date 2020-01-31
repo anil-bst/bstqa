@@ -1,0 +1,204 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/seo-urls data.seoUrlsData}}
+    {{> common/stylesheets }}
+    <link href="/node-static/css/create-a-tournament.css" rel="stylesheet" />
+    {{> common/scripts locale}}
+</head>
+{{#with data}}
+<body>
+    {{> common/noscript}}
+    {{> common/header header}}
+    <div class="main-container">
+        <div class="create-a-tournament">
+            {{#with heroSection}}
+            <section class="hero-banner-section" >
+                <picture>
+                    <source media="(min-width: 1023px)" srcset={{bannerDeskTopImageUrl}}>
+                    <source media="(min-width: 300px)" srcset={{bannerMobImageUrl}}>
+                    <img src={{bannerDeskTopImageUrl}} data-src={{bannerDeskTopImageUrl}} alt="tourney image">
+                </picture>
+                <div class="container">
+                    <div class="hero-section">
+                        <div class="hero-content">
+                            <h1 class="hero-heading {{extraHeadingClasses}}">{{heading}}</h1>
+                            <div class="hero-game-info">
+                                <div class="hero-game-info-left">
+                                    <p>{{content}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {{/with}}
+            <section class="discord-section" id="discord_section">
+                <div class="container">
+                    {{#with discordSection}}
+                    <div class="discord-detail">
+                        <h3 class="heading-3">{{heading}}</h3>
+                        <div class="row">
+                            <div class="col col-8">
+                                <p class="content">{{content}}</p>
+                                <a class="discord-invite-btn" href="https://www.game.tv/oauthv2/begin?partner=add-discord-bot&redirect_url=%2Ftournament%2Fapi%2Fadd_guild_owner" target="_blank"><img src="{{iconUrl}}" alt="icon" /><span>{{btnText}}</span></a>
+                            </div>
+                            <div class="col col-4">
+                                <div class="discord-image">
+                                    <img src="{{imageUrl}}" alt="tournament image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="discord-steps">
+                        <h4 class="heading-4">Steps</h4>
+                        <div class="row">
+                            {{#each steps}}
+                                <div class="col col-4  col-md-6">
+                                    <figure>
+                                        <img src={{imgUrl}} alt="steps"/>
+                                        <figcaption>{{title}} <a class="click-here" href="{{linkUrl}}">{{linkString}}</a></figcaption>
+                                    </figure>
+                                </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    {{/with}}
+                </div>
+            </section>
+            <section class="game-section" id="game_section">
+                    <div class="container">
+                        {{#with gameSection}}
+                        <div class="game-detail">
+                            <h3 class="heading-3">{{heading}}</h3>
+                            <div class="row">
+                                <div class="col col-8">
+                                    <p class="content">{{content}}</p>
+                                    <a class="game-invite-btn" href="/user"><img src="{{iconUrl}}" alt="icon" />{{btnText}}</a>
+                                </div>
+                                <div class="col col-4">
+                                    <div class="game-image">
+                                        <img src="{{imageUrl}}" alt="tournament image" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-steps">
+                            <h4 class="heading-4">Steps</h4>
+                            <div class="row">
+                                {{#each steps}}
+                                    <div class="col col-4 col-md-6">
+                                        <figure>
+                                            <img src={{imgUrl}} />
+                                            <figcaption>{{title}} <a href="{{linkUrl}}">{{linkString}}</a></figcaption>
+                                        </figure>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                        {{/with}}
+                    </div>
+                </section>
+        </div>
+    </div>
+    {{> common/footer footer}}
+    <script src="/node-static/js/common/main.js"></script>
+    <script type="application/ld+json">
+    [
+        {
+          "@context": "http://schema.org",
+          "@type": "HowTo",
+          {{#with heroSection}}
+          "name": "{{heading}}",
+          "description": "{{StringModifyForLDJson content 0 150 }}",
+          "supply": [
+            {
+                "@type": "HowToSupply",
+                "name": "NA"
+                }
+            ],
+            "tool": [
+                {
+                "@type": "HowToTool",
+                "name": "Tourney"
+                }
+          ],
+          "image": {
+            "@type": "ImageObject",
+            "url": "{{bannerDeskTopImageUrl}}"
+          },
+          {{/with}}
+          "step": [
+            {{#with discordSection}}
+            {
+              "@type": "HowToStep",
+              "url": "{{ ../seoUrlsData.canonical }}#discord_section",
+              "name": "{{heading}}",
+              "image": {
+                "@type": "ImageObject",
+                "url": "{{steps.0.imgUrl}}"
+              },
+              "itemListElement": [
+                {{#each steps}}
+                  {
+                    "@type": "HowToDirection",
+                    "text": "{{title}} {{linkString}}",
+                    "image": "{{imgUrl}}"
+                  }{{#if @last}}{{else}},{{/if}}
+                {{/each}}
+              ]
+            }{{/with}}, 
+            {{#with gameSection}}
+            {
+              "@type": "HowToStep",
+              "name": "{{heading}}",
+              "url": "{{ ../seoUrlsData.canonical }}#game_section",
+              "image": {
+                "@type": "ImageObject",
+                "url": "{{steps.0.imgUrl}}"
+              },
+              "itemListElement": [
+                {{#each steps}}
+                  {
+                    "@type": "HowToTip",
+                    "text": "{{title}} {{linkString}}",
+                    "image": "{{imgUrl}}"
+                  }{{#if @last}}{{else}},{{/if}}
+                {{/each}}
+              ]
+            }
+            {{/with}}
+          ],
+          "totalTime": "PT3M"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            {{#if locales}}
+            "item": "https://game.tv{{locales}}"
+            {{else}}
+            "item": "https://game.tv"
+            {{/if}}
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Tournaments",
+            {{#if locales}}
+            "item": "https://www.game.tv{{locales}}/find-tournaments"
+            {{else}}
+            "item": "https://www.game.tv/find-tournaments"
+            {{/if}}
+          },{
+            "@type": "ListItem",
+            "position": 3,
+            "name": "{{heroSection.heading}}",
+            "item": "{{ seoUrlsData.canonical }}"
+          }]
+        }
+      ]
+    </script>
+</body>
+{{/with}}

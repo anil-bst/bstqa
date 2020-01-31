@@ -1,0 +1,3 @@
+Interceptors modify the response returned from a controller, and pass it on to the view, all non-controller specfic tasks like modifying locales, adding common locales must be done by an interceptor, instead of the controller. A controller must only be bothered with the task of collecting data for rendering a page, formatting the data must be done by the interceptor.
+
+https://docs.nestjs.com/interceptors

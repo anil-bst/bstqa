@@ -1,0 +1,47 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/buttons';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/language-selector';
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-not-found {
+  flex: 1;
+  align-items: center;
+  display: flex;
+  text-align: center;
+
+  h1 {
+    text-align: center;
+    width: 100%;
+    font-size: 55px;
+    color: #6c6cff;
+    font-weight: 600;
+  }
+
+  .err-tag {
+    display: inline-block;
+    font-size: 120px;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-not-found {
+    padding: 20px;
+
+    h1 {
+      font-size: 30px;
+    }
+
+    .err-tag {
+      font-size: 80px;
+    }
+  }
+}

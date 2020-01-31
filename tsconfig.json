@@ -1,0 +1,67 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "outDir": "dist",
+        "module": "commonjs",
+        "target": "es2017",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noImplicitAny": false,
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "rootDir": "src",
+        "baseUrl": "src",
+        "declaration": true,
+        "paths": {
+            "@app": [
+                ""
+            ],
+            "@app/*": [
+                "*"
+            ],
+            "@orm/*": [
+                "orm/*"
+            ],
+            "@config": [
+                "config"
+            ],
+            "@config/*": [
+                "config/*"
+            ],
+            "@environments":[
+                "environments/*"
+            ],
+            "@constants": [
+                "constants"
+            ],
+            "@constants/*": [
+                "constants/*"
+            ],
+            "@schemas/*": [
+                "schemas/*"
+            ],
+            "@games/*": [
+                "modules/api/games/*"
+            ],
+            "@tournaments/*": [
+                "modules/api/tournaments/*"
+            ],
+            "@middlewares/*": [
+                "middlewares/*"
+            ],
+            "@common/*": [
+                "common/*"
+            ],
+            "@interceptors/*": [
+                "interceptors/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "test",
+        "dist",
+        "**/*spec.ts"
+    ]
+}

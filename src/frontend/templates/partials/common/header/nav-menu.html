@@ -1,0 +1,11 @@
+<ul class="menu-links" id="menu_links">
+  {{#each navigationMenu}}
+  <li class="menu-item li-{{classes}}">
+    <a href="{{link}}" class="menu-link {{classes}}" target="{{target}}">{{name}}</a>
+    {{> common/header/nav-sub-menu subMenu}}
+  </li>
+  {{/each}}
+  <li class="menu-item pc-visible">
+    {{> common/header/language-selector languageSelector}}
+  </li>
+</ul>

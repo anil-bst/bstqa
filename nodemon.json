@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "*.ts",
+  "ignore": ["src/**/*.spec.ts", "src/public", "src/frontend" ],
+  "exec": "node -r ./dist/main.js"
+}

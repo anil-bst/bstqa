@@ -1,0 +1,22 @@
+<header class="header-section">
+  <div class="container">
+    <div class="header-content">
+      <a class="logo" href="{{link}}">
+        <img class="logo-img" src="https://cdn.game.tv/images/meet-tourney/tourney.png" alt="game.tv logo">
+      </a>
+      <div class='mob-visible language-selector-container'>
+        {{> common/header/language-selector languageSelector}}
+      </div>
+      {{> common/header/nav-menu navigationMenu=navigationMenu languageSelector=languageSelector }}
+      <div class="menu-bar" id="menu_icon" onclick="window.Utils.toggleMenu()">
+        <span class="bar b1"></span>
+        <span class="bar b2"></span>
+        <span class="bar b3"></span>
+      </div>
+      <a href="/find-tournaments" class="nav-search-icon"></a>
+      <div class="header-search-form-wrapper js-search-header">
+        {{> common/search-tournaments}}
+      </div>
+    </div>
+  </div>
+</header>

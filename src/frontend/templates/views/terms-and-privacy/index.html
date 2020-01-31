@@ -1,0 +1,34 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/seo-urls data.seoUrlsData}}
+    {{> common/stylesheets }}
+    <link href="/node-static/css/terms-and-privacy.css" rel="stylesheet" />
+    {{> common/scripts locale}}
+</head>
+{{#with data}}
+
+<body class='{{bodyClass}}'>
+    {{> common/noscript}}
+    {{> common/header header}}
+    <div class="main-container">
+        <section class="terms-privacy-wrapper">
+            <div class="container">
+                <h1 class="heading text-center">{{heading}}</h1>
+                <h2 class="sub-heading mb-50">{{subHeading}}</h2>
+                {{#each contents}}
+                <div class="content {{extraClass}}">
+                    {{#if title}}<h3>{{title}}</h3>{{/if}}
+                    {{#each steps}}
+                    {{#if title}}<h4>{{title}}</h4>{{/if}}
+                    <p class="{{extraContentClass}}">{{{content}}}</p>
+                    {{#if imageUrl}}<img class="img-responsive mb-24" src="{{imageUrl}}">{{/if}}
+                    {{/each}}
+                </div>
+                {{/each}}
+            </div>
+        </section>
+    </div>
+    {{> common/footer footer}}
+    <script src="/node-static/js/common/main.js"></script>
+</body>
+{{/with}}

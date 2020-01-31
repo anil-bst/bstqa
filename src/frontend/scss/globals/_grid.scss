@@ -1,0 +1,73 @@
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+}
+
+[class*='col-'] {
+  flex-basis: 100%;
+  position: relative;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+//for tablet portrait proportion
+@media only screen and (min-width: 768px) {
+  .row {
+    flex-flow: row wrap;
+  }
+
+  .col-md-6 {
+    flex-basis: 50%;
+  }
+}
+
+// for tablet landscape and desktop
+
+@media (min-width: 1023px) {
+  .row {
+    flex-flow: row wrap;
+  }
+
+  .col-1 {
+    flex-basis: 8.33%;
+  }
+
+  .col-2 {
+    flex-basis: 16.66%;
+  }
+
+  .col-3 {
+    flex-basis: 25%;
+  }
+
+  .col-4 {
+    flex-basis: 33.33%;
+  }
+
+  .col-5 {
+    flex-basis: 41.66%;
+  }
+
+  .col-6 {
+    flex-basis: 50%;
+  }
+
+  .col-7 {
+    flex-basis: 58.33%;
+  }
+
+  .col-8 {
+    flex-basis: 66.66%;
+  }
+
+  .col-9 {
+    flex-basis: 75%;
+  }
+
+  .col-10 {
+    flex-basis: 83%;
+  }
+}

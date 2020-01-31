@@ -1,0 +1,28 @@
+<div class="language-selector menu-box">
+  <button class="language-selector-btn" onclick="window.Utils.toggleLangSelector()" type="button">
+    <span class="selected-lang">{{selected.languageTitle}}</span>
+    {{#if languages}}
+    <svg class="svg" role="img">
+      <symbol id="arrow-down" viewBox="0 0 7 4">
+        <path
+          d="M1.659,0.274l2.198,2.117c0.38,0.366,0.38,0.958,0,1.323 c-0.379,0.366-0.994,0.366-1.374,0L0.285,1.597c-0.379-0.365-0.379-0.957,0-1.323C0.664-0.091,1.279-0.091,1.659,0.274z">
+        </path>
+        <path
+          d="M6.055,1.597L3.856,3.714c-0.379,0.366-0.994,0.366-1.374,0 c-0.379-0.365-0.379-0.957,0-1.323l2.198-2.117c0.379-0.365,0.995-0.365,1.374,0C6.434,0.64,6.434,1.232,6.055,1.597z">
+        </path>
+      </symbol>
+      <use xlink:href="#arrow-down"></use>
+    </svg>
+    {{/if}}
+  </button>
+  {{#if languages}}
+  <ul class="language-selector-list">
+    {{#each languages}}
+    <li>
+      <a href="{{url}}" class="lang-link {{hreflang}}" data-lang="{{hreflang}}" onclick="window.Utils.setCookieLocale('{{hreflang}}')"><span
+          class="locale-name">{{languageTitle}}</span></a>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</div>

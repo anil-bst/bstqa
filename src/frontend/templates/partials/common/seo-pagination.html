@@ -1,0 +1,25 @@
+{{#if seoUrlsData.pages.current}}
+{{# with seoUrlsData}}
+<link rel="canonical" href="{{ canonical }}?page={{pages.current}}" />
+{{/with}}
+{{else}}
+<link rel="canonical" href="{{ seoUrlsData.canonical }}" />
+{{/if}}
+
+{{#if seoUrlsData.pages.next}}
+{{# with seoUrlsData}}
+<link rel="next" href="{{ canonical }}?page={{pages.next}}"/>
+{{/with}}
+{{/if}}
+
+{{#if seoUrlsData.pages.prev}}
+{{# with seoUrlsData}}
+<link rel="prev" href="{{ canonical }}?page={{ pages.prev}}"/>
+{{/with}}
+{{/if}}
+
+
+{{#each seoUrlsData.alternate}}
+<link rel="alternate" href="{{ url }}" hreflang="{{ hreflang }}" />
+{{/each}}
+<meta property="og:locale" content="{{ locale }}" />

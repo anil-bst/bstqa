@@ -1,0 +1,78 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/header';
+@import 'components/footer';
+
+.gif-wrapper {
+  background-color: $color__secondary;
+
+  figure {
+    margin: 0 auto;
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      margin: 0 auto;
+      max-height: 395px;
+    }
+  }
+
+  .heading {
+    color: #fff;
+    text-align: center;
+    margin-top: 32px;
+  }
+}
+
+.upper-section-bg {
+  background-color: $color__white;
+  margin-bottom: 30px;
+
+  img {
+    max-width: 100%;
+    margin-top: -2px;
+  }
+}
+
+.description-wrapper {
+  .container {
+    max-width: 700px;
+  }
+
+  .heading {
+    padding-left: 35px;
+    position: relative;
+
+    &::before {
+      width: 4px;
+      position: absolute;
+      left: 20px;
+      background: linear-gradient(45deg, #656cff 0%, #b671ff 100%);
+      border-radius: 2.5px;
+      content: '';
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  .para {
+    padding: 20px;
+    font-size: 16px;
+    color: #45454f;
+    line-height: 26px;
+    margin-bottom: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .upper-section-bg {
+    margin-bottom: 30px;
+  }
+
+  .contactus-wrapper {
+    .gif-wrapper img {
+      max-height: 300px;
+    }
+  }
+}

@@ -1,0 +1,696 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/animation';
+@import 'components/graph';
+
+$color__light_grey1: #dae1e6;
+$color__medium_grey: #83939f;
+
+.ss-container {
+  position: relative;
+
+  .sponsorship-section {
+    padding: 100px 0;
+
+    .container {
+      display: flex;
+      align-items: center;
+
+      .w-50 {
+        width: 50%;
+      }
+    }
+
+    // .content-block {
+    .hero-banner-heading {
+      color: $color__light_grey1;
+      font-size: 56px;
+      font-weight: 500;
+      line-height: 1.1;
+      margin: 0;
+      max-width: 350px;
+    }
+    // }
+
+    .image-block {
+      text-align: center;
+
+      img {
+        display: inline-block;
+        border: 10px solid #2f3a43;
+        max-width: 361px;
+        width: 100%;
+        height: 361px;
+        border-radius: 5px;
+      }
+    }
+
+    .scroll {
+      &-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &-down {
+        margin-top: 20px;
+        color: #83939f;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 16px;
+        position: relative;
+        cursor: pointer;
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          background-size: 12px;
+          background-repeat: no-repeat;
+          background-position: center;
+          transform: translateZ(0);
+          animation-name: hvr-icon-hang-sink, hvr-icon-hang;
+          animation-duration: 0.3s, 1.5s;
+          animation-delay: 0s, 0.3s;
+          animation-timing-function: ease-out, ease-in-out;
+          animation-iteration-count: 1, infinite;
+          animation-fill-mode: forwards;
+          animation-direction: normal, alternate;
+        }
+
+        &::after {
+          top: 2px;
+          background-image: url(https://cdn.game.tv/images/meet-tourney/arrow.png);
+        }
+
+        &::before {
+          top: -7px;
+          background-image: url(https://cdn.game.tv/images/meet-tourney/arrow-light.png);
+        }
+      }
+    }
+  }
+
+  .play-sponsor-section {
+    background-color: #1c252c;
+    padding: 72px 0;
+
+    .play-wrapper-block {
+      display: flex;
+      margin-bottom: 64px;
+
+      .play-content-block {
+        width: 70%;
+        padding-right: 28px;
+
+        h2 {
+          color: $color__light_grey1;
+          font-size: 40px;
+          font-weight: 500;
+          line-height: 1.2;
+          margin-bottom: 24px;
+        }
+
+        p {
+          color: $color__medium_grey;
+          font-size: 20px;
+          line-height: 1.4;
+        }
+      }
+
+      .play-image-block {
+        h2 {
+          display: none;
+        }
+
+        width: 30%;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .verified-badge-section {
+    background-color: #222d35;
+    padding: 72px 0;
+
+    .section-block {
+      display: flex;
+      margin-bottom: 88px;
+      align-items: center;
+      justify-content: space-between;
+
+      .section-image {
+        width: 40%;
+
+        h2 {
+          display: none;
+        }
+
+        img {
+          max-width: 458px;
+          // height: 300px;
+          width: 100%;
+        }
+      }
+
+      .section-content {
+        width: 40%;
+
+        h2 {
+          color: $color__light_grey1;
+          font-size: 40px;
+          font-weight: 500;
+          line-height: 1.2;
+          margin-bottom: 24px;
+        }
+
+        p {
+          color: $color__medium_grey;
+          font-size: 16px;
+          line-height: 22px;
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .section-block:nth-child(even) {
+      .section-image {
+        order: 2;
+      }
+
+      .section-content {
+        order: 1;
+      }
+    }
+  }
+
+  .tiers-section {
+    padding: 72px 0 0;
+    background-color: #1c252c;
+
+    .tier-block {
+      max-width: 725px;
+      margin: 0 auto;
+
+      h2 {
+        color: $color__light_grey1;
+        font-size: 40px;
+        font-weight: 500;
+        line-height: 1.2;
+        margin-bottom: 24px;
+        text-align: center;
+      }
+
+      p {
+        color: $color__medium_grey;
+        font-size: 20px;
+        line-height: 28px;
+        text-align: center;
+      }
+    }
+
+    .graph-list {
+      max-width: 725px;
+      margin: 0 auto;
+      margin-top: 56px;
+
+      .graph-item {
+        width: 208px;
+
+        &:last-child {
+          opacity: 0.4;
+
+          /*         &::before {
+            content: 'Coming Soon';
+          } */
+        }
+
+        &.active {
+          opacity: 1;
+        }
+
+        .graph {
+          min-height: 243px;
+        }
+      }
+
+      .silver-roles .graph .graph-block .extra-features {
+        background: none;
+        padding: 0;
+        margin: 0;
+
+        &::before {
+          position: relative;
+          top: unset;
+        }
+
+        p {
+          color: $color__medium_grey;
+        }
+      }
+
+      .graph-item:nth-child(2) .graph {
+        min-height: 279px;
+      }
+
+      .graph-item:nth-child(3) .graph {
+        min-height: 319px;
+      }
+
+      .graph-item:nth-child(4) .graph {
+        min-height: 359px;
+      }
+
+      .graph-item:nth-child(5) .graph {
+        min-height: 399px;
+      }
+
+      .graph-item:nth-child(4),
+      .graph-item:nth-child(5) {
+        opacity: 1;
+
+        &::before {
+          content: '';
+        }
+      }
+    }
+  }
+
+  .leaderboard-section {
+    background-color: #222d35;
+    padding: 72px 0;
+
+    .container {
+      .leaderboard-img {
+        width: 100%;
+      }
+
+      .leaderboard-block {
+        max-width: 725px;
+        margin: 0 auto 56px;
+
+        h2 {
+          color: $color__light_grey1;
+          font-size: 40px;
+          font-weight: 500;
+          line-height: 1.2;
+          margin-bottom: 24px;
+          text-align: center;
+        }
+
+        p {
+          color: $color__medium_grey;
+          font-size: 20px;
+          line-height: 28px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  html[dir="rtl"] {
+    .ss-container {
+      .sponsorship-section {
+        min-height: 450px;
+
+        .container .w-50 {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .ss-container {
+    .sponsorship-section {
+      background-image: none !important;
+      padding: 50px 0;
+      background-color: #222d35;
+
+      .container {
+        padding-left: 20px;
+        padding-right: 20px;
+        flex-flow: column;
+
+        .content-block {
+          width: 100%;
+
+          .hero-banner-heading {
+            font-size: 40px;
+            line-height: 1.2;
+          }
+        }
+      }
+    }
+
+    .play-sponsor-section {
+      padding: 32px 0;
+
+      .container {
+        padding-left: 15px;
+        padding-right: 15px;
+
+        .play-wrapper-block {
+          flex-flow: column;
+          // margin-bottom: 32px;
+
+          .play-content-block {
+            order: 2;
+
+            h2 {
+              display: none;
+            }
+
+            p {
+              font-size: 16px;
+            }
+
+            width: 100%;
+            padding-right: 0;
+          }
+
+          .play-image-block {
+            order: 1;
+
+            h2 {
+              display: block;
+              color: $color__light_grey1;
+              font-size: 32px;
+              font-weight: 500;
+              line-height: 1.2;
+            }
+
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .verified-badge-section {
+      padding: 32px 0;
+
+      .container {
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .section-block {
+          flex-flow: column;
+          margin-bottom: 32px;
+
+          .section-image {
+            order: 1;
+            width: 100%;
+            margin-bottom: 16px;
+
+            h2 {
+              display: block;
+              color: $color__light_grey1;
+              font-size: 28px;
+              font-weight: 500;
+              line-height: 37px;
+            }
+
+            img {
+              height: auto;
+            }
+          }
+
+          .section-content {
+            order: 2;
+            width: 100%;
+
+            h2 {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .tiers-section {
+      padding: 32px 0;
+
+      .container {
+        padding-left: 15px;
+        padding-right: 15px;
+
+        .tier-block {
+          h2 {
+            font-size: 32px;
+            line-height: 37px;
+            text-align: left;
+          }
+
+          p {
+            font-size: 16px;
+            text-align: left;
+          }
+        }
+
+        .graph-section {
+          .graph-list {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 32px;
+
+            .graph-item {
+              margin: 0 0 24px;
+              width: 33.33%;
+
+              &:last-child {
+                &::before {
+                  content: '';
+                }
+              }
+
+              &.active {
+                position: fixed;
+                top: 0;
+                height: 100vh;
+                z-index: 999;
+                width: 100%;
+                background-color: #1c252c;
+                padding: 20px !important;
+
+                &.platinum-roles,
+                &.diamond-roles {
+                  .graph {
+                    opacity: 0.4;
+                  }
+
+                  .tier-plan {
+                    position: relative;
+                    padding-bottom: 30px;
+
+                    &::after {
+                      // content: 'Coming Soon';
+                      content: '';
+                      color: $color__medium_grey;
+                      font-size: 14px;
+                      line-height: 16px;
+                      font-weight: 900;
+                      position: absolute;
+                      bottom: 15px;
+                    }
+                  }
+                }
+
+                .slide-control {
+                  display: flex;
+                }
+
+                .close-slide-control {
+                  width: 32px;
+                  height: 32px;
+                  position: absolute;
+                  top: 10px;
+                  right: 20px;
+                  background: url(https://cdn.game.tv/images/meet-tourney/cross.png) no-repeat center;
+                  background-size: 100%;
+                  z-index: 999;
+                }
+
+                .tier-plan {
+                  text-align: left;
+
+                  img {
+                    margin-left: 0;
+                    order: 2;
+                    margin-bottom: 24px;
+                    max-width: 123px;
+                  }
+
+                  figcaption {
+                    line-height: 19px;
+                    font-weight: 500;
+                    color: $color__light_grey1;
+                    order: 1;
+                    margin-bottom: 38px;
+                  }
+                }
+
+                .graph {
+                  display: block;
+                  background: #1c252c;
+                  margin: 0;
+                  padding: 0;
+
+                  &::after {
+                    border: none;
+                  }
+                }
+              }
+
+              .slide-control {
+                border-top: 1px solid #6d7c88;
+                justify-content: space-between;
+                position: absolute;
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                padding: 20px;
+                display: none;
+
+                &.f-e {
+                  justify-content: flex-end;
+                }
+
+                &.f-s {
+                  justify-content: flex-start;
+                }
+
+                .control-content {
+                  display: flex;
+                  align-items: center;
+                  cursor: pointer;
+
+                  img {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 12px;
+                  }
+
+                  .control-txt {
+                    h4 {
+                      font-size: 14px;
+                      line-height: 16px;
+                      color: #9dafbd;
+                      margin: 0;
+                      margin-bottom: 8px;
+                      font-weight: 400;
+                      position: relative;
+
+                      &::after {
+                        content: '';
+                        background: url(https://cdn.game.tv/images/meet-tourney/arrow-light.png) no-repeat center right;
+                        background-size: 12px;
+                        width: 13px;
+                        height: 13px;
+                        display: inline-block;
+                        transform: rotate(-90deg);
+                      }
+                    }
+
+                    h5 {
+                      font-size: 12px;
+                      line-height: 14px;
+                      color: #6d7c88;
+                      margin: 0;
+                      font-weight: 400;
+                    }
+                  }
+
+                  &.prev {
+                    flex-direction: row-reverse;
+
+                    img {
+                      margin-right: 0;
+                      margin-left: 12px;
+                    }
+
+                    .control-txt {
+                      h4 {
+                        &::after {
+                          background-position: center left;
+                          transform: rotate(90deg);
+                          position: absolute;
+                          left: -15px;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              .tier-plan {
+                display: flex;
+                flex-flow: column;
+
+                img {
+                  max-width: 80px;
+                  margin-bottom: 8px;
+                }
+
+                figcaption {
+                  order: 2;
+                  text-decoration: underline;
+                }
+              }
+
+              .graph {
+                display: none;
+              }
+
+              &:nth-child(4),
+              &:nth-child(5) {
+                padding-top: 0;
+                opacity: 1;
+
+                &::before {
+                  content: '';
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .leaderboard-section {
+      padding: 32px 0;
+
+      .container {
+        padding-left: 15px;
+        padding-right: 15px;
+
+        .leaderboard-block {
+          h2 {
+            font-size: 32px;
+            text-align: left;
+          }
+
+          p {
+            font-size: 16px;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+}

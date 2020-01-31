@@ -1,0 +1,226 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/animation';
+
+.how-to-use-container {
+  position: relative;
+
+  .how-to-use-tourney {
+    background-color: #1c252c;
+
+    .container {
+      display: flex;
+      align-items: flex-start;
+
+      .side-navigation {
+        width: 33.333333%;
+        padding-top: 40px;
+
+        .selected-nav {
+          display: none;
+        }
+
+        .navigation-list {
+          display: flex;
+          flex-flow: column;
+
+          li {
+            position: relative;
+            color: #83939f;
+            font-size: 16px;
+            line-height: 22px;
+            margin-bottom: 24px;
+            cursor: pointer;
+
+            &.active {
+              font-weight: 500;
+
+              &::before {
+                content: '';
+                width: 24px;
+                height: 2px;
+                background-color: #426bff;
+                bottom: -3px;
+                left: 0;
+                position: absolute;
+              }
+            }
+          }
+        }
+      }
+
+      .navigation-content {
+        background-color: #222d35;
+        width: 66.666667%;
+        padding: 32px 64px;
+        min-height: 750px;
+
+        .content-wrapper {
+          display: none;
+
+          &.active {
+            display: block;
+          }
+        }
+
+        .heading {
+          font-size: 40px !important;
+          font-weight: 500;
+          line-height: 47px;
+          color: #dae1e6;
+          margin-bottom: 24px;
+        }
+
+        .content-list {
+          color: #83939f;
+          font-size: 16px;
+          line-height: 22px;
+
+          li {
+            margin-bottom: 32px;
+          }
+
+          strong {
+            font-weight: 400;
+            color: #fff;
+          }
+
+          a {
+            text-decoration: underline;
+            color: #83939f;
+          }
+
+          .inner-content {
+            margin-top: 24px;
+            padding-left: 48px;
+
+            p {
+              margin-bottom: 24px;
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+            }
+          }
+
+          .content-image {
+            margin: 0;
+
+            .img-block {
+              position: relative;
+              padding-left: 18px;
+              margin-top: 16px;
+              margin-bottom: 32px;
+
+              &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                border-left: 2px solid #26313a;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .how-to-use-container {
+    .how-to-use-tourney {
+      .container {
+        flex-flow: column;
+
+        .side-navigation {
+          width: 100%;
+          background-color: #222d35;
+          padding: 15px;
+          position: fixed;
+          z-index: 99;
+
+          .selected-nav {
+            display: block;
+            color: #a3afb8;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 22px;
+            margin-bottom: 0;
+            cursor: pointer;
+            position: relative;
+            padding-bottom: 10px;
+
+            &::after {
+              content: '';
+              background: url(https://cdn.game.tv/images/meet-tourney/arrow.png) no-repeat;
+              background-size: 16px;
+              background-position: right;
+              position: absolute;
+              right: 0;
+              width: 20px;
+              height: 20px;
+              transition: 0.5s;
+            }
+
+            &::before {
+              content: '';
+              width: 24px;
+              height: 2px;
+              background-color: #426bff;
+              bottom: 8px;
+              left: 0;
+              position: absolute;
+            }
+
+            &.open {
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+              &::after {
+                transform: rotate(180deg);
+                transition: 0.5s;
+              }
+            }
+          }
+
+          .navigation-list {
+            display: none;
+
+            &.open {
+              display: block;
+              height: 300px;
+              overflow-y: auto;
+              box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            }
+          }
+        }
+
+        .navigation-content {
+          width: 100%;
+          padding: 70px 15px 32px;
+        }
+      }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  .how-to-use-container {
+    .how-to-use-tourney {
+      .container .side-navigation {
+        .navigation-list li {
+          &.active {
+            &::before {
+              left: inherit;
+              right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

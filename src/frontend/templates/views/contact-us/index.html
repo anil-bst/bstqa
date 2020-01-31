@@ -1,0 +1,37 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/seo-urls data.seoUrlsData}}
+    {{> common/stylesheets }}
+    <link href="/node-static/css/contact.css" rel="stylesheet" />
+    {{> common/scripts locale}}
+</head>
+
+{{#with data}}
+
+<body class='{{bodyClass}}'>
+    {{> common/noscript}}
+    {{> common/header header}}
+    <section class="main-container contactus-wrapper">
+        <div class="gif-wrapper">
+            <figure>
+                <img src="https://cdn.game.tv/contact-us.png" class="hero-banner" />
+            </figure>
+        </div>
+        <div class="upper-section-bg">
+            <img class="pc-visible" src="https://cdn.game.tv/bg-element.png" />
+            <img class="mob-visible" src="https://cdn.game.tv/bg-element-mobile.png" />
+        </div>
+        <div class="description-wrapper">
+            <div class="container">
+                <h2 class="heading">{{heading }}</h2>
+                <p class="para">
+                    {{ content }}
+                    <a href="mailto:info@game.tv">{{ linkText }}</a>
+                </p>
+            </div>
+        </div>
+    </section>
+    {{> common/footer footer}}
+    <script src="/node-static/js/common/main.js"></script>
+</body>
+{{/with}}

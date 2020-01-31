@@ -1,0 +1,418 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/header';
+@import 'components/footer';
+@import 'globals/grid';
+
+$color__darkgrey__bg: #12181c;
+$color__lightgrey_text:#83939f;
+$color__blue: #426bff;
+$color__offwhite: #dae1e6;
+$color__darkgrey__border: #242f38;
+$color__darkgrey2__category: #1c252c;
+$color__darkgrey3__bg:#161d22;
+
+.tournament-detail {
+  counter-reset: howToJoin;
+
+  figure {
+    margin: 0;
+  }
+
+  span {
+    display: inline-block;
+  }
+
+  h3 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: $color__offwhite;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  &-wrapper {
+    background-color: $color__darkgrey__bg;
+    color: $color__lightgrey_text;
+  }
+
+  &-banner-section {
+    max-height: 438px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(18, 24, 28, 0) 55.26%, #12181c 100%);
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &-info-section {
+    padding-bottom: 48px;
+  }
+
+  .category-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+
+  .platform-icon {
+    height: 24px;
+    width: 24px;
+    margin: 0 8px;
+  }
+
+  .country-icon {
+    height: 16px;
+    width: 28px;
+  }
+
+  .link-to-tournaments {
+    margin: 0 0 26px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    padding-left: 30px;
+    position: relative;
+    text-transform: uppercase;
+
+    &::before {
+      content: url('https://cdn.game.tv/images/tournament-details/left-arrow.png');
+      position: absolute;
+      left: 10px;
+      width: 16px;
+      top: 2px;
+    }
+  }
+
+  .tournament-image {
+    display: none;
+  }
+
+  .register-btn-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      width: 100%;
+      background-color: $color__blue;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+      text-align: center;
+      border: 0;
+      color: $color__white;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .tournament-content-wrapper {
+    margin-bottom: 48px;
+  }
+
+  .time-wrapper {
+    color: $color__offwhite;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+
+    .date {
+      padding-right: 8px;
+      border-right: 1px solid $color__darkgrey__border;
+      margin-right: 8px;
+    }
+  }
+
+  .tournament-name {
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .category {
+    // display: inline-block;
+    padding: 9px 16px;
+    border-radius: 20px;
+    background-color: $color__darkgrey2__category;
+    margin: 8px 16px 8px 0;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .prize {
+    &-wrapper {
+      padding-bottom: 48px;
+      border-bottom: 1px solid $color__darkgrey__border;
+      margin-bottom: 48px;
+    }
+
+    &-info {
+      padding-left: 8px;
+    }
+
+    &-icon {
+      width: 120px;
+      margin: 0 auto 16px;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &-content {
+      // display: inline-block;
+      width: 100%;
+      font-size: 20px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      text-align: left;
+
+      &.see-more {
+        color: #426bff;
+
+        &:hover {
+          color: #426bff;
+        }
+      }
+    }
+  }
+
+  .register {
+    &-heading {
+      font-size: 18px;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+  }
+
+  &-video-section {
+    background-color: $color__darkgrey3__bg;
+    padding-bottom: 48px;
+
+    &-heading {
+      padding: 48px 0 26px;
+    }
+  }
+
+  .video-wrapper {
+    position: relative;
+
+    video {
+      width: 100%;
+    }
+
+    img {
+      width: 61px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+    }
+  }
+
+  &-content-section {
+    // padding: 48px 0;
+    .heading {
+      text-transform: capitalize;
+      margin: 48px 0 16px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.55;
+    }
+  }
+
+  .how-to-join-wrapper {
+    margin-bottom: 48px;
+
+    div[class*=col-] {
+      padding: 0 15px;
+    }
+
+    .image-wrapper {
+      align-self: center;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    ul {
+      font-size: 18px;
+      line-height: 1.55;
+      padding: 0;
+    }
+
+    .content {
+      padding: 0 0 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid $color__darkgrey__border;
+
+      &::before {
+        counter-increment: howToJoin;
+        content: counter(howToJoin) '  ';
+        position: absolute;
+        left: -3px;
+      }
+    }
+  }
+
+  .organiser-wrapper {
+    text-transform: uppercase;
+    position: relative;
+    padding: 8px;
+
+    .bold {
+      font-weight: 600;
+    }
+  }
+
+  .rules-wrapper {
+    .content {
+      font-size: 18px;
+      line-height: 1.55;
+      margin: 8px 0;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .tournament-detail {
+    .container {
+      padding: 0;
+    }
+
+    &-banner-section {
+      max-height: 438px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .register-btn-wrapper {
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      button {
+        max-width: 242px;
+        margin-bottom: 0;
+      }
+    }
+
+    .tournament-image {
+      display: block;
+
+      figure {
+        display: inline-block;
+        height: 100%;
+        width: 230px;
+        // box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.3);
+        // background-color: $color_grey;
+      }
+    }
+
+    .prize {
+      &-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      &-info {
+        max-width: 204px;
+        border-left: 1px solid #242f38;
+      }
+
+      &-icon {
+        width: 84px;
+
+        img {
+          width: 84px;
+        }
+      }
+    }
+
+    .add-border {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid $color__darkgrey__border;
+    }
+
+    .register-heading {
+      margin-bottom: 20px;
+    }
+
+    .tournament-content-wrapper {
+      margin-bottom: 0;
+    }
+
+    &-info-section,
+    &-video-section {
+      padding-bottom: 72px;
+      margin-bottom: 0;
+    }
+
+    &-stream-section {
+      &-heading {
+        padding: 72px 0 26px;
+      }
+    }
+
+    .how-to-join-wrapper {
+      .content {
+        &::before {
+          left: -20px;
+        }
+      }
+    }
+
+    .video-wrapper img {
+      width: 41px;
+    }
+
+    &-content-section {
+      padding: 24px 0;
+
+      p {
+        font-size: 20px;
+        line-height: 1.4;
+      }
+    }
+
+    .rules-wrapper {
+      .content {
+        font-size: 20px;
+        line-height: 1.4;
+        margin: 8px 0;
+      }
+    }
+  }
+}

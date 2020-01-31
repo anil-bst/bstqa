@@ -1,0 +1,2 @@
+This contains all enums. Anything that requires a type selection between a pre-defined list of types, must be defined as an enum. 
+all files must follow `name.enum.ts` naming pattern, and must export only a single enum.

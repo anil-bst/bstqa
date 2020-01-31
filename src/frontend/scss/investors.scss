@@ -1,0 +1,98 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/buttons';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/language-selector';
+
+.main-container {
+  .gif-wrapper {
+    text-align: center;
+    background-color: $color__secondary;
+
+    img {
+      max-width: 100%;
+      max-height: 395px;
+      margin: 0 auto;
+    }
+  }
+
+  .upper-section-bg {
+    background-color: $color__white;
+    margin-bottom: 30px;
+
+    img {
+      max-width: 100%;
+      margin-top: -18px;
+    }
+  }
+
+  .container {
+    padding: 20px 20px 60px 20px;
+
+    .heading {
+      font-size: 20px;
+      color: $color__secondary;
+      position: relative;
+      padding-left: 10px;
+      margin-bottom: 24px;
+
+      &::before {
+        content: "";
+        width: 4px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, #656cff 0%, #b671ff 100%);
+        border-radius: 2.5px;
+      }
+    }
+
+    p {
+      font-size: 16px;
+      color: #45454f;
+      line-height: 26px;
+    }
+  }
+}
+
+html[dir="rtl"] {
+  .main-container {
+    .container {
+      .heading {
+        padding-left: 0;
+        padding-right: 10px;
+
+        &::before {
+          left: inherit;
+          right: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    .container {
+      max-width: 700px;
+      margin-top: 50px;
+
+      p {
+        margin-bottom: 32px;
+      }
+
+      .view-team {
+        width: 48%;
+      }
+    }
+  }
+
+  .investors-wrapper {
+    .gif-wrapper img {
+      max-height: 300px;
+    }
+  }
+}

@@ -1,0 +1,280 @@
+<head>
+  {{> common/game-metatags metadata=data.metadata game = data.game}}
+  {{> common/seo-pagination data}}
+  {{> common/stylesheets }}
+  <link href="/node-static/css/game-details.css" rel="stylesheet" />
+  {{> common/scripts locale}}
+</head>
+
+{{#with data}}
+
+<body class='{{bodyClass}}' data-source={{game.source}}>
+  {{> common/noscript}}
+  {{> common/header header}}
+  <div class="main-container" data-slug="{{game.slug}}" data-page="{{tournaments.metaData.page}}" data-cursor="{{tournaments.metaData.cursor}}" data-gameId="{{game.gameId}}">
+    <section class="game-details">
+      <div class="hero-banner absolute" style="background-image:url({{game.media.default.bannerUrl}});">
+        <img class="img-responsive mob-visible" src="{{game.media.mobile.bannerUrl}}" alt="" />
+      </div>
+      <div class="banner-overlay">
+        <div class="container">
+          <figure class="image-icon">
+            <img src="{{game.media.default.logoUrl}}" class="img-responsive" />
+          </figure>
+          <div class="banner-content">
+            <div class="col-8">
+              <h1 class="heading">{{game.name}} {{tournamentTitle}}</h1>
+              <p class="content">{{#with (TemplateStringReplace gameDetail 'gameName' game.name) as |gameDetailString|}}
+                {{TemplateStringReplace gameDetailString 'communityCount' ../game.communityCount}}
+              {{/with}}</p>
+              
+            </div>
+            <div class="col-4">
+              <div class="description">
+                <p class="game-info">
+                  {{gameInfo.title}}
+                  <a class="create-own" href={{gameInfo.linkUrl}}>{{gameInfo.content}}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    {{> common/tournaments this}}
+    <section class="game-details-info">
+      <div class="container">
+        <h2 class="heading">{{game.name}}</h2>
+        <p class="game-content">{{game.description}}</p>
+        <div class="tournament-types">
+          <h3 class="heading">
+            {{TemplateStringReplace tournamentTypes.heading 'gameName' game.name}}
+          </h3>
+          <div class="type-content">
+            <ul class="type-list">
+              {{#each game.tournamentTypes}}
+              <li class="type-item">
+                <figure>
+                  <img src="{{media.default.imageUrl}}" alt="" />
+                </figure>
+                <p class="details">{{name}}</p>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+        <div class="prizes-types">
+          <h3 class="heading">
+            {{TemplateStringReplace prizeTypes.heading 'gameName' game.name}}
+          </h3>
+          <p class="desc">
+            {{TemplateStringReplace prizeTypes.description 'gameName' game.name}}
+          </p>
+          <div class="type-content">
+            <ul class="type-list">
+              {{#each prizeTypes.blocks}}
+              <li class="type-item">
+                <figure>
+                  <img src={{imageUrl}} alt={{imageAlt}}>
+                </figure>
+                <p class="details">{{content}}</p>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+        <div class="join-tournament">
+          <h3 class="heading">
+            {{TemplateStringReplace joinTournament.heading 'gameName' game.name}}
+          </h3>
+          <ul class="join-tournament-list">
+            {{#each joinTournament.blocks}}
+            <li class="join-item" id="how_to_join_step_{{@index}}">
+              <p class="steps">
+                {{gamePlatform}}
+                <span class="steps-h">{{stepsHeading}}</span>
+              </p>
+              <div class="steps-desc">
+                <ul class="steps-list">
+                  {{#each stepsContent}}
+                  <li class="step-item {{#unless @index}}active{{/unless}}">
+                    <p class="step-content">
+                      {{#with (TemplateStringReplace stepItem 'gameName' ../../game.name) as |stepItemContent|}}
+                      {{{stepItemContent}}}
+                      {{/with}}
+                    </p>
+                    <figure class="step-image">
+                      <img src="{{imgUrl}}" />
+                    </figure>
+                  </li>
+                  {{/each}}
+                </ul>
+                <figure class="steps-image-section">
+                  <img src={{firstImage}}>
+                </figure>
+              </div>
+
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="start-tournament">
+          <h3 class="heading">
+            {{TemplateStringReplace startTournament.heading 'gameName' game.name}}
+          </h3>
+          <ul class="start-tournament-list">
+            {{#each startTournament.blocks}}
+            <li class="start-item" id="how_to_start_{{@index}}">
+              <p class="steps">{{gamePlatform}}
+                <span class="steps-h">{{stepsHeading}}</span>
+              </p>
+              <div class="steps-desc">
+                <ul class="steps-list">
+                  {{#each stepsContent}}
+                  <li class="step-item {{#unless @index}}active{{/unless}}">
+                    <p class="step-content">
+                      {{#with (TemplateStringReplace stepItem 'gameName' ../../game.name) as |stepItemContent|}}
+                      {{{stepItemContent}}}
+                      {{/with}}
+                    </p>
+                    <figure class="step-image">
+                      <img src="{{imgUrl}}" />
+                    </figure>
+                  </li>
+                  {{/each}}
+                </ul>
+                <figure class="steps-image-section">
+                  <img src={{firstImage}}>
+                </figure>
+              </div>
+
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+  {{> common/footer footer}}
+  <script src="/node-static/js/game-pages/main.js"></script>
+  <script type="application/ld+json">
+    [
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "applicationCategory": "Game, Multimedia",
+      "name": "{{game.name}} {{tournamentTitle}}",
+      "operatingSystem": "ANDROID",
+      "url": "{{ seoUrlsData.canonical }}",
+      "image": "{{game.media.default.bannerUrl}}",
+      "description": "{{StringModifyForLDJson game.description 0 150 }}",
+      "aggregateRating":{
+          "@type":"AggregateRating",
+          "ratingValue": "{{#if game.avgRating}}{{game.avgRating}}{{else}}4.5{{/if}}",
+          "ratingCount":"{{#if game.totalRating}}{{game.totalRating}}{{else}}439{{/if}}"
+      }
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "HowTo",
+      "name": "{{TemplateStringReplace joinTournament.heading 'gameName' game.name}}",
+      "description": "{{StringModifyForLDJson game.description 0 150 }}",
+      "supply": [
+        {
+          "@type": "HowToSupply",
+          "name": "NA"
+        }
+      ],
+      "tool": [
+        {
+          "@type": "HowToTool",
+          "name": "Tourney"
+        }
+      ],
+      "step": [
+        {{#each joinTournament.blocks}}
+        {
+          "@type": "HowToStep",
+          "url": "{{ ../seoUrlsData.canonical }}#how_to_start_{{@index}}",
+          "name": "{{gamePlatform}} {{stepsHeading}}",
+          "image": {
+            "@type": "ImageObject",
+            "url": "{{stepsContent.0.imgUrl}}"
+          },
+          "itemListElement": [
+            {{#each stepsContent}}
+              {
+                "@type": "HowToDirection",
+                "text": "{{#with (TemplateStringReplace stepItem 'gameName' ../../game.name) as |stepItemContent|}}{{{stepItemContent}}}{{/with}}",
+                "image": "{{imgUrl}}"
+              }{{#if @last}}{{else}},{{/if}}
+            {{/each}}
+          ]
+        }{{#if @last}}{{else}},{{/if}}
+        {{/each}}
+      ],
+      "totalTime": "PT3M"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        {{#if locales}}
+        "item": "https://game.tv{{locales}}"
+        {{else}}
+        "item": "https://game.tv"
+        {{/if}}
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Tournaments",
+        {{#if locales}}
+        "item": "https://www.game.tv{{locales}}/find-tournaments"
+        {{else}}
+        "item": "https://www.game.tv/find-tournaments"
+        {{/if}}
+      },{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{game.name}} {{tournamentTitle}}",
+        "item": "{{ seoUrlsData.canonical }}"
+      }]
+    },
+    {{#with (ListItem 0 3 tournaments.data) as |top3Tournaments| }}
+    {{#each top3Tournaments}}
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "{{name}}",
+        "startDate": "{{tournamentStartDate}}",
+        "endDate": "{{AddDays tournamentStartDate 1}}",
+        "location": {
+          "@type": "Place",
+          "name": "{{countryNameMap geo}}",
+          "url": "{{esportsUrl}}",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "NA",
+            "addressRegion": "{{geo}}"
+          }
+        },
+        "image": [
+          "{{media.default.bannerUrl}}"
+        ],
+        "description": "{{StringModifyForLDJson description 0 150 }}",
+        "performer": {
+          "@type": "PerformingGroup",
+          "name": "{{#if createdBy.userName}}{{createdBy.userName}}{{else}}NA{{/if}}"
+        }
+      }{{#if @last}}{{else}},{{/if}}
+    {{/each}}
+    {{/with}}
+  ]
+  </script>
+  
+</body>
+{{/with}}

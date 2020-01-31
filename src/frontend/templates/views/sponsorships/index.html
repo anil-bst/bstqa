@@ -1,0 +1,102 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/seo-urls data.seoUrlsData}}
+    {{> common/stylesheets }}
+    <link href="/node-static/css/sponsorships.css" rel="stylesheet" />
+    {{> common/scripts locale}}
+</head>
+{{#with data}}
+
+<body class='{{bodyClass}}'>
+    {{> common/noscript}}
+    {{> common/header header}}
+    <div class="ss-container">
+        {{#with sponsorshipSection}}
+        <section class="sponsorship-section"
+            style="background: url({{imageUrl}}) no-repeat top right; background-size: contain; background-color: #222D35">
+            <div class="container">
+                <div class="w-50 content-block">
+                    <h1 class="hero-banner-heading">{{{title}}}</h1>
+                </div>
+                <img class="img-responsive mob-visible" src="{{imageUrl}}">
+                <div class="scroll-wrapper">
+                    <a href="javascript:void(0)" class="scroll-down mob-visible"></a>
+                </div>
+            </div>
+        </section>
+        {{/with}}
+        {{#with playSponsorSection}}
+        <section class="play-sponsor-section">
+            <div class="container">
+                {{#each blocks}}
+                <div class="play-wrapper-block">
+                    <div class="play-content-block">
+                        <h2>{{title}}</h2>
+                        {{#each contents}}
+                        <p>{{this}}</p>
+                        {{/each}}
+                    </div>
+                    <div class="play-image-block">
+                        <h2>{{title}}</h2>
+                        <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}">
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/with}}
+        {{#with verifiedBadgeSection}}
+        <section class="verified-badge-section">
+            <div class="container">
+                {{#each blocks}}
+                <div class="section-block">
+                    <div class="section-image">
+                        <h2>{{title}}</h2>
+                        <img class="img-responsive" src="{{imageUrl}}" alt="{{imageAlt}}">
+                    </div>
+                    <div class="section-content">
+                        <h2>{{title}}</h2>
+                        {{#each contents}}
+                        <p>{{this}}</p>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </section>
+        {{/with}}
+        {{#with tiersSection}}
+        <section class="tiers-section">
+            <div class="container">
+                <div class="tier-block">
+                    <h2>{{content.title}}</h2>
+                    {{#each content.contents}}
+                    <p>{{this}}</p>
+                    {{/each}}
+                </div>
+                {{>common/graph-content graphContent}}
+            </div>
+        </section>
+        {{/with}}
+        {{#with leaderboardSection}}
+        <section class="leaderboard-section">
+            <div class="container">
+                <div class="leaderboard-block">
+                    <h2>{{title}}</h2>
+                    {{#each contents}}
+                    <p>{{this}}</p>
+                    {{/each}}
+                </div>
+                <picture>
+                    <source media="(min-width: 1023px)" srcset={{desktopImageUrl}}>
+                    <source media="(min-width: 300px)" srcset={{mobImageUrl}}>
+                    <img class="leaderboard-img" src={{meskTopImageUrl}} data-src={{meskTopImageUrl}} alt="leaderboard image">
+                </picture>
+            </div>
+        </section>
+        {{/with}}
+    </div>
+    {{> common/footer footer}}
+    <script src="/node-static/js/sponsorships/main.js"></script>
+</body>
+{{/with}}

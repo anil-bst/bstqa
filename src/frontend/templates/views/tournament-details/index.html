@@ -1,0 +1,127 @@
+<head>
+    {{> common/metatags data.metadata}}
+    {{> common/seo-urls data.seoUrlsData}}
+    {{> common/stylesheets }}
+    <link href='/node-static/css/tournament-detail.css' rel='stylesheet' />
+    {{> common/scripts locale}}
+</head>
+{{#with data}}
+
+<body class='{{bodyClass}}'>
+    {{> common/noscript}}
+    {{> common/header header}}
+    <div class='main-container tournament-detail'>
+        <div class='tournament-detail-wrapper'>
+            <section class='tournament-detail-banner-section'>
+                <picture>
+                    <source media='(min-width: 769px)' srcset={{media.default.bannerUrl}}>
+                    <source media='(max-width: 768px)' srcset={{media.default.bannerUrl}}>
+                    <img src={{media.default.bannerUrl}} data-src={{media.default.bannerUrl}} alt='game image'>
+                </picture>
+            </section>
+            <section class='tournament-detail-info-section'>
+                <div class='container'>
+                    <div class='link-to-tournaments'>{{linkToAllTournaments}}</div>
+                    <div class='row'>
+                        <div class='tournament-image col-3'>
+                            <figure>
+                                <img src={{gameIconUrl}} alt='game icon' />
+                            </figure>
+                        </div>
+                        <div class='col-9'>
+                            <div class='row add-border'>
+                                <div class='col-7'>
+                                    <div class='tournament-content-wrapper'>
+                                        <div class='tournament-content'>
+                                            <div class='time-wrapper'>
+                                                <span class='date'>{{GetRegistrationDate registrationEndDate}}</span>
+                                                <span class='time'>{{GetRegistrationTime registrationEndDate}}</span>
+                                            </div>
+                                            <div class='tournament-name'>{{name}}</div>
+                                            <div class='category-wrapper'>
+                                                    <span class='category'>{{gameName}}</span>
+                                                    <span class='category'>{{gameFormat}}</span>
+                                                    <span class='category'><img class="platform-icon" src="https://cdn.game.tv/tournaments/{{platform}}.png"></span>
+                                                    <span class='category'><img class="country-icon" src="https://cdn.game.tv/locales/{{StringSlice geo 0 2 }}.png"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='col-5'>
+                                    <div class=' prize-wrapper'>
+                                        <figure class='prize-icon'>
+                                            <img src='https://cdn.game.tv/images/tournament-details/trophy-icon.png' alt='trophy icon' />
+                                        </figure>
+                                        <div class='prize-info'>
+                                            <span class='prize-content'>{{prizes}}</span>
+                                            <a href='#prize' class='prize-content see-more {{ShowSeeMore prizes}}'>{{noPrizeInfo}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='register-wrapper'>
+                                <span class='register-heading'>{{registerSection.heading}}</span>
+                                <div class='register-btn-wrapper'><button>{{registerSection.btnText}}</button> <div class='organiser-wrapper'>{{organiserText}} <span class='bold'>{{createdBy.userName}}</span></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {{#if videoUrl}}
+            <section class='tournament-detail-video-section'>
+                <div class='container'>
+                    <h3 class='tournament-detail-video-section-heading'>{{videoSection.heading}}</h3>
+                    <div class='video-wrapper'>
+                        <video id='tournamentVideo'>
+                            <source src={{videoSection.videoUrl}} type='video/mp4'>
+                            Your browser does not support video tag!
+                        </video>
+                        <img id='playIcon' src='https://cdn.game.tv/images/tournament-details/play-icon.png' />
+                    </div>
+                </div>
+            </section>
+            {{/if}}
+            <section class='tournament-detail-content-section'>
+                <div class='container'>
+                    <div class='detail-wrapper'>
+                        <h3 class='heading'>{{details.detailsSectionHeading}}</h3>
+                        <p class='content'>{{description}}</p>
+                    </div>
+                    <div class='rules-wrapper'>
+                        <h3 class='heading'>{{details.ruleSectionHeading}}</h3>
+                        <ul>
+                            {{#each rules}}
+                            <li class='content'>{{{this}}}</li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                    {{#with details.howToJoinSection}}
+                    <div class='how-to-join-wrapper'>
+                        <h3 class='heading'>{{heading}}</h3>
+                        <div class='row'>
+                            <div class='col-6'>
+                                <ul class='how-to-join-content'>
+                                    {{#each content}}
+                                        <li class='content'>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            
+                            <div class='image-wrapper col-6'>
+                                <figure><img src={{imgUrl}} alt='how to join image'/></figure>
+                            </div>
+                        </div>
+                    </div>
+                    {{/with}}
+                    <div id='prize' name='prize' class='prize-content-wrapper'>
+                        <h3 class='heading'>{{details.prizeSectionHeading}}</h3>
+                        <p class='content'>{{prizes}}</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    {{> common/footer footer}}
+    <script src='/node-static/js/common/main.js'></script>
+</body>
+{{/with}}

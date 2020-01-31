@@ -1,0 +1,237 @@
+$color__lightgrey__text: #83939f;
+
+.active-overlay {
+  position: fixed;
+  overflow: hidden;
+}
+
+.graph-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  max-width: 750px;
+  margin: 0 auto;
+  margin-top: 100px;
+
+  .graph-item {
+    width: 208px;
+    position: relative;
+
+    .graph {
+      background: linear-gradient(180deg, #313e47 0%, #161d22 100%);
+      min-height: 299px;
+      position: relative;
+      margin-top: -50px;
+      padding: 75px 16px 24px 16px;
+
+      &::after {
+        border-bottom: 35px solid #313e47;
+        border-left: 104px solid transparent;
+        border-right: 104px solid transparent;
+        content: '';
+        height: 0;
+        left: 0;
+        position: absolute;
+        top: -35px;
+        width: 0;
+      }
+
+      .graph-block {
+        margin-bottom: 30px;
+
+        span {
+          opacity: 0.6;
+          color: #a3afb8;
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 1px;
+          line-height: 11px;
+          margin-bottom: 5px;
+          text-transform: uppercase;
+        }
+
+        p {
+          color: #83939f;
+          font-size: 14px;
+          line-height: 18px;
+          margin-bottom: 0;
+        }
+
+        p + p {
+          margin-top: 10px;
+        }
+
+        .extra-features {
+          position: relative;
+
+          &::before {
+            content: '\002B';
+            width: 20px;
+            height: 20px;
+            color: #426bff;
+          }
+
+          p {
+            font-weight: 500;
+          }
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .tier-plan {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0;
+
+      figcaption {
+        font-size: 16px;
+        line-height: 22px;
+        color: #83939f;
+        margin-bottom: 8px;
+      }
+
+      img {
+        max-width: 123px;
+        margin: 0 auto;
+      }
+    }
+
+    .status {
+      color: $color__lightgrey__text;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+  }
+
+  .silver-roles .graph .graph-block .extra-features {
+    margin: 0 -16px;
+    background: linear-gradient(270deg, rgba(66, 107, 255, 0) 0%, #426bff 100%);
+    padding: 8px 16px;
+    margin-top: 24px;
+
+    &::before {
+      position: absolute;
+      top: -24px;
+    }
+
+    p {
+      color: #f6f7f8;
+    }
+  }
+
+  .graph-item:nth-child(2) .graph {
+    min-height: 339px;
+  }
+
+  .graph-item:nth-child(3) .graph {
+    min-height: 379px;
+  }
+
+  .graph-item:nth-child(4) {
+    opacity: 0.4;
+    position: relative;
+    padding-top: 20px;
+
+    &::before {
+      content: 'Coming Soon';
+      position: absolute;
+      z-index: 22;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      line-height: 22px;
+      color: #caf0ff;
+    }
+
+    .graph {
+      min-height: 419px;
+    }
+  }
+
+  .graph-item:nth-child(5) {
+    opacity: 0.4;
+    position: relative;
+    padding-top: 20px;
+
+    &::before {
+      content: 'Coming Soon';
+      position: absolute;
+      z-index: 22;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      line-height: 22px;
+      color: #caf0ff;
+    }
+
+    .graph {
+      min-height: 459px;
+    }
+  }
+
+  .graph-item:last-child {
+    opacity: 0.4;
+    position: relative;
+    padding-top: 20px;
+    margin: 0;
+
+    &::before {
+      content: 'Coming Soon';
+      position: absolute;
+      z-index: 22;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      line-height: 22px;
+      color: #caf0ff;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .graph-list {
+    .graph-item {
+      .graph {
+        &::after {
+          border-bottom: 35px solid #313e47;
+          border-left: 9.3vw solid transparent;
+          border-right: 9.3vw solid transparent;
+          content: '';
+          height: 0;
+          left: 0;
+          position: absolute;
+          top: -35px;
+          width: 0;
+        }
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .graph-list {
+    .graph-item:nth-child(4),
+    .graph-item:nth-child(5) {
+      &::before {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+/* [lang=ja] .graph-list {
+  max-width: 100%;
+} */

@@ -1,0 +1,133 @@
+footer {
+  height: auto;
+  background-color: #141a1f;
+  padding: 32px 0;
+
+  .container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: auto;
+
+    .footer-menu-list {
+      width: 60%;
+      align-items: flex-start;
+      height: auto;
+
+      .logo-img {
+        max-width: 32px;
+        margin-left: 0;
+        display: inline-block;
+        cursor: default;
+      }
+
+      a {
+        color: #83939f;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 16px;
+      }
+
+      .sub-menu {
+        li {
+          margin-bottom: 15px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .copyright p {
+      color: #a3afb8;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16px;
+      margin-left: 32px;
+      margin-bottom: 0;
+      opacity: 0.4;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  [lang="fr"],
+  [lang="de"] {
+    footer {
+      .container {
+        .footer-menu-list {
+          > li {
+            width: 22%;
+
+            &:first-child {
+              width: 10%;
+            }
+          }
+
+          .sub-menu {
+            padding-right: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  footer {
+    .container {
+      padding-left: 15px;
+      padding-right: 15px;
+      flex-flow: column;
+
+      .footer-menu-list {
+        flex-flow: column;
+
+        > li {
+          margin-bottom: 40px;
+        }
+
+        > li:first-child {
+          margin-bottom: 32px;
+        }
+
+        a {
+          color: #dae1e6;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 400;
+        }
+
+        .logo-img {
+          max-width: 16px;
+        }
+
+        .sub-menu {
+          li {
+            margin-bottom: 10px;
+          }
+        }
+      }
+
+      .copyright {
+        p {
+          margin-left: 0;
+          font-size: 14px;
+          line-height: 18px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  footer {
+    .container {
+      .copyright p {
+        direction: ltr;
+      }
+    }
+  }
+}

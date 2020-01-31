@@ -1,0 +1,285 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/header';
+@import 'components/footer';
+@import 'globals/grid';
+
+//local color variables
+$color__text__light:#dae1e6;
+$color__text__dark: #83939f;
+$color__grey1__bg: #12181c;
+$color__grey2_bg: #1c252c;
+$color__border_steps:#242f38;
+$color__btn_bg: #426bff;
+$color__btn_bg2: #50abf1;
+
+.create-a-tournament {
+  color: $color__text__dark;
+
+  .hero {
+    &-banner-section {
+      background-color: $color__grey1__bg;
+      position: relative;
+      display: flex;
+      flex-flow: column-reverse wrap;
+      overflow: hidden;
+
+      picture {
+        z-index: 0;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &-section {
+      color: $color__text__light;
+      text-align: left;
+    }
+
+    &-content {
+      padding: 40px 0 0;
+      font-size: 18px;
+      line-height: 1.56;
+      color: $color__text__dark;
+    }
+
+    &-heading {
+      font-size: 40px;
+      line-height: 1.2;
+      font-weight: 900;
+      margin: 0 0 8px;
+      color: $color__text__light;
+      position: relative;
+    }
+  }
+
+  .click-here {
+    color: #426bff;
+    font-weight: 500;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: #426bff;
+    }
+  }
+
+  .discord,
+  .game {
+    &-section {
+      background-color: $color__grey2_bg;
+
+      .heading-3 {
+        color: $color__text__light;
+      }
+
+      .content {
+        font-size: 16px;
+        line-height: 1.4;
+      }
+    }
+
+    &-detail {
+      padding: 48px 0;
+
+      .row {
+        flex-flow: column-reverse wrap;
+      }
+
+      .heading-3 {
+        font-size: 2rem;
+        line-height: 1.2;
+        font-weight: 500;
+      }
+
+      .content {
+        margin-bottom: 32px;
+      }
+    }
+
+    &-image {
+      img {
+        width: 100%;
+      }
+    }
+
+    &-invite-btn {
+      padding: 16px;
+      background-color: $color__btn_bg;
+      color: $color__white;
+      font-size: 20px;
+      position: relative;
+      text-align: center;
+      width: 320px;
+      display: inline-block;
+
+      img {
+        width: 40px;
+        margin-right: 20px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+    }
+
+    &-steps {
+      padding-bottom: 60px;
+
+      figcaption {
+        font-size: 18px;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        max-width: 360px;
+        box-sizing: border-box;
+        position: relative;
+
+        &::before {
+          display: block;
+          content: '';
+          padding-top: calc(100% * 2 / 3);
+          background-color: $color__grey2_bg;
+        }
+      }
+
+      figure {
+        height: 100%;
+        border-bottom: 1px solid $color__border_steps;
+        margin: 0;
+        padding-bottom: 16px;
+      }
+
+      .heading-3 {
+        margin: 32px 0;
+      }
+
+      .heading-4 {
+        font-size: 1rem;
+        line-height: 1.2;
+        font-weight: 500;
+        color: $color__text__light;
+      }
+
+      .col {
+        margin: 16px 0;
+
+        // &:last-child {
+        //   margin-bottom: 60px;
+        // }
+      }
+    }
+  }
+
+  .discord {
+    &-section {
+      counter-reset: discord-steps;
+    }
+
+    &-steps {
+      figcaption {
+        &::before {
+          counter-increment: discord-steps;
+          content: counter(discord-steps) ". ";
+        }
+      }
+    }
+  }
+
+  .game {
+    &-section {
+      counter-reset: game-steps;
+    }
+
+    &-invite-btn {
+      background-color: $color__btn_bg2;
+    }
+
+    &-steps {
+      figcaption {
+        &::before {
+          counter-increment: game-steps;
+          content: counter(game-steps) ". ";
+        }
+      }
+    }
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  @media (min-width: 1023px) {
+    .hero {
+      &-section {
+        padding-bottom: 0;
+      }
+
+      &-banner-section {
+        picture {
+          position: absolute;
+          z-index: 0;
+        }
+      }
+
+      &-heading {
+        font-size: 48px;
+      }
+
+      &-content {
+        font-size: 24px;
+        padding: 163px 0;
+        max-width: 560px;
+        color: $color__text__light;
+      }
+    }
+
+    .discord,
+    .game {
+      &-detail {
+        .row {
+          flex-flow: row wrap;
+          margin: 0 -10px;
+        }
+      }
+
+      &-section {
+        .heading-3 {
+          font-size: 40px;
+        }
+
+        .content {
+          font-size: 20px;
+        }
+      }
+
+      &-steps {
+        img {
+          // width: 360px;
+          max-width: 360px;
+          width: 100%;
+          height: auto;
+          margin-bottom: 16px;
+        }
+
+        .heading-4 {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+html[dir="rtl"] {
+  .create-a-tournament {
+    .hero-banner-section {
+      img {
+        transform: scaleX(-1);
+      }
+    }
+  }
+}

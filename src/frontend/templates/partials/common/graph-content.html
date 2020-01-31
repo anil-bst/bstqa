@@ -1,0 +1,68 @@
+<div class="graph-section">
+    <ul class="graph-list">
+        {{#each this.graphList}}
+        <li class="graph-item {{type}}-roles">
+            <figure class="tier-plan">
+                <figcaption>
+                    {{imageCaption}}
+                </figcaption>
+                <img class="img-responsive" src="{{imageUrl}}" alt="{{imageCaption}}" />
+            </figure>
+            <div class="graph">
+                {{# if statusText}}
+                    <span class="status">{{statusText}}</span>
+                {{/if}}
+                <div class="graph-block">
+                    <span>{{../forTitle}}</span>
+                    <p>{{forDuration}}</p>
+                </div>
+                <div class="graph-block">
+                    <span>{{../perksTitle}}</span>
+                    {{! don't show isPreviousPerkExcluded is false}}
+                    {{#unless isPreviousPerkExcluded}}
+                    {{! get previous value of array and give an alias to it of |previous}}
+                    {{#with (ArrayPrevious ../graphList @index) as |previous|}}
+                    <p>{{previous.imageCaption}} {{../../perksTitle}}</p>
+                    <div class="extra-features">
+                        {{/with}}
+                        {{/unless}}
+                        {{! show list of all perks }}
+                        {{#each perks}}
+                        <p>{{this}}</p>
+                        {{/each}}
+                        {{! don't show isPreviousPerkExcluded is false}}
+                        {{#unless isPreviousPerkExcluded}}
+                        {{#with (ArrayPrevious ../graphList @index) }}
+                    </div>
+                    {{/with}}
+                    {{/unless}}
+                </div>
+            </div>
+            <span class="close-slide-control"></span>
+            <div class="slide-control mob-visible">
+                {{#with (ArrayPrevious ../graphList @index) as |previous|}}
+                <div class="control-content prev" data-target="{{previous.type}}-roles">
+                    <img src="{{previous.imageUrl}}" alt="" />
+                    <div class="control-txt">
+                        <h4>{{../../previousTitle}} </h4>
+                        <h5>{{previous.imageCaption}} </h5>
+                    </div>
+                </div>
+                {{else}}
+                <div class="control-content next" style="visibility: hidden;">
+                </div>
+                {{/with}}
+                {{#with (ArrayNext ../graphList @index) as |next|}}
+                <div class="control-content next" data-target="{{next.type}}-roles">
+                    <img src="{{next.imageUrl}}" alt="" />
+                    <div class="control-txt">
+                        <h4>{{../../nextTitle}}</h4>
+                        <h5>{{next.imageCaption}}</h5>
+                    </div>
+                </div>
+                {{/with}}
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</div>

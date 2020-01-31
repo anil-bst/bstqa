@@ -1,0 +1,149 @@
+@import 'globals/reset';
+@import 'globals/default';
+@import 'globals/colors';
+@import 'components/header';
+@import 'components/footer';
+@import 'components/animation';
+@import 'components/graph';
+@import 'card';
+
+// custom color variables
+$game_section_bg: #1c252c;
+$color__border: #26313a;
+$color__text: #a3afb8;
+
+.game-detail {
+  background-color: $color_dark_grey;
+  color: $color__white;
+
+  .hero {
+    &-section {
+      color: $color__white;
+      text-align: left;
+      padding-bottom: 20px;
+
+      .title-image {
+        width: 64px;
+        // margin-bottom: 16px;
+      }
+
+      .down-arrow {
+        &-mobile {
+          position: relative;
+        }
+
+        &-icon {
+          &::after,
+          &::before {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 50%;
+            color: $color__white;
+            transform: rotate(90deg);
+          }
+
+          &::after {
+            content: '\003E';
+            margin-left: -18px;
+            opacity: 0.5;
+          }
+
+          &::before {
+            content: '\003E';
+            margin-left: -18px;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    &-content {
+      padding: 200px 0 40px;
+    }
+
+    &-heading {
+      font-size: 48px;
+      font-weight: 900;
+      padding: 0 0 24px;
+      color: $color__white;
+      position: relative;
+    }
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  .tournament-section {
+    padding: 16px 0 0;
+    color: $color__white;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 32px 0;
+    }
+
+    h2 {
+      font-size: 32px;
+    }
+
+    .create-your-game {
+      padding-top: 32px;
+      border-top: 1px solid $color__border;
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .game-detail-section {
+    color: $color__text;
+
+    &-heading {
+      color: $color__white;
+      margin-bottom: 24px;
+    }
+
+    .col {
+      width: 50%;
+      margin: 16px 0;
+      padding: 0 8px;
+    }
+
+    img {
+      width: 132px;
+      height: 132px; // need to remove
+    }
+  }
+
+  @media (min-width: 1023px) {
+    .hero {
+      &-section {
+        padding-bottom: 0;
+      }
+
+      &-game-info {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .down-arrow-mobile {
+      display: none;
+    }
+
+    .game-detail-section {
+      .col {
+        width: 20%;
+      }
+
+      img {
+        width: 166px;
+        height: 166px; // need to remove
+      }
+    }
+  }
+}
