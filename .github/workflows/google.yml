@@ -60,9 +60,11 @@ jobs:
       run: | 
           sudo mkdir -p $HOME/.kube
           sudo chown $(id -u):$(id -g) $HOME/.kube/
-          sudo chown $(id -u):$(id -g) $HOME/.kube/config 
+          
     - name: Export KUBECONFIG
-      run: sudo cp ./config $HOME/.kube/config
+      run: |
+        sudo cp ./config $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config 
     - name: Kube Export
       run: export KUBECONFIG=$HOME/.kube/config
     - name: Check Config Content 
