@@ -26,6 +26,7 @@ env:
   REGISTRY_HOSTNAME: gcr.io
   DEPLOYMENT_NAME: qa-frontend
 
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -34,6 +35,7 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v2
+    - run: pip install pyopenssl
 
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
