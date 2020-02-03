@@ -70,7 +70,9 @@ jobs:
         curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
     - name: Export KUBECONFIG
-      run: sudo cp config /root/config
+      run: sudo cp ./config /root/config
+    - name: Check Config Content 
+      run: cat /root/config
     - name: Assign Permission to KUBECONFIG
       run: sudo chmod 777 -R /root/config
     - name: Check Config
