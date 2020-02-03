@@ -55,6 +55,16 @@ jobs:
         gcloud components install kubectl
       
     # Build the Docker image
+    - name: Export KUBECONFIG
+      run: sudo cp ./config /root/config
+    - name: Kube Export
+      run: export KUBECONFIG=/root/config
+    - name: Check Config Content 
+      run: sudo cat /root/config
+    - name: Assign Permission to KUBECONFIG
+      run: sudo chmod 777 -R ~/.kube/config
+    - name: Check Config
+      run: sudo kubectl config view
     - name: Build
       run: |        
         docker build --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" --build-arg ENVIRONMENT=qa --build-arg MONGO_URI=mongodb+srv://gametvqa:pxnT6fZ3VSiIvWRw@qa-gametv-kjpap.gcp.mongodb.net/game-tv-v1 --build-arg PRIVATE_API_TOKEN=zUINSip5RwM6QWgOrcaoqWsra3nQITK --build-arg REDIS_HOST=35.223.116.199 --build-arg REDIS_PORT=6379 --build-arg REDIS_DB=0 -t gcr.io/game-tv-website-qa/qa-frontend-test:v6 --no-cache .
@@ -69,14 +79,14 @@ jobs:
       run: |
         curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
-    - name: Export KUBECONFIG
-      run: sudo cp ./config ~/.kube/config
-    - name: Check Config Content 
-      run: sudo cat ~/.kube/config
-    - name: Assign Permission to KUBECONFIG
-      run: sudo chmod 777 -R ~/.kube/config
-    - name: Check Config
-      run: sudo kubectl config view
+    #- name: Export KUBECONFIG
+    #  run: sudo cp ./config ~/.kube/config
+    #- name: Check Config Content 
+    #  run: sudo cat ~/.kube/config
+    #- name: Assign Permission to KUBECONFIG
+    #  run: sudo chmod 777 -R ~/.kube/config
+    #- name: Check Config
+    #  run: sudo kubectl config view
     
 
     # Deploy the Docker image to the GKE cluster
