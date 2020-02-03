@@ -51,6 +51,7 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
+        gcloud components install kubectl
       
     # Build the Docker image
     - name: Build
@@ -71,8 +72,8 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-        ./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend-test:v6
-        ./kustomize build . | kubectl apply -f -
-      #kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v5
+        kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6
+      #gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
+      #./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend-test:v6
+      #./kustomize build . | kubectl apply -f -      
       #kubectl get services -o wide
