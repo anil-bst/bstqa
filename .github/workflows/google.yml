@@ -70,11 +70,11 @@ jobs:
         curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
     - name: Export KUBECONFIG
-      run: sudo cp ./config /root/config
+      run: sudo cp ./config ~/.kube/config
     - name: Check Config Content 
-      run: sudo cat /root/config
+      run: sudo cat ~/.kube/config
     - name: Assign Permission to KUBECONFIG
-      run: sudo chmod 777 -R /root/config
+      run: sudo chmod 777 -R ~/.kube/config
     - name: Check Config
       run: sudo kubectl config view
     
@@ -82,7 +82,7 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --kubeconfig=/root/config  --insecure-skip-tls-verify=true
+        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --kubeconfig=~/.kube/config  --insecure-skip-tls-verify=true
       #gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
       #./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend-test:v6
       #./kustomize build . | kubectl apply -f -      
