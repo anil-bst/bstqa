@@ -37,8 +37,8 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v2
-    - name: install python-openssl
-      run: sudo apt-get install -y python-openssl -o=Dpkg::Use-Pty=0
+    #- name: install python-openssl
+    # run: sudo apt-get install -y python-openssl -o=Dpkg::Use-Pty=0
 
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -53,8 +53,11 @@ jobs:
         # via gcloud command-line tool.
         gcloud auth configure-docker
         gcloud components install kubectl
+        
       
     # Build the Docker image
+    - name: Check KUBE Folder
+      run: sudo find / -type d -name ".kube"
     - name: Export KUBECONFIG
       run: sudo cp ./config /root/config
     - name: Kube Export
