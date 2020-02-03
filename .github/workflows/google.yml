@@ -74,7 +74,7 @@ jobs:
     - name: Assign Permission to KUBECONFIG
       run: sudo chmod 777 -R /root/config
     - name: Check Config
-      run: kubectl config view
+      run: sudo kubectl config view
     
 
     # Deploy the Docker image to the GKE cluster
