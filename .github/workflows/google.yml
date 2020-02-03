@@ -62,7 +62,7 @@ jobs:
     - name: Check Config Content 
       run: sudo cat /root/config
     - name: Assign Permission to KUBECONFIG
-      run: sudo chmod 777 -R ~/.kube/config
+      run: sudo chmod 777 -R /root/config
     - name: Check Config
       run: sudo kubectl config view
     - name: Build
