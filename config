@@ -19,7 +19,7 @@ users:
       config:
         access-token: ya29.c.KpQBvAdfR-rTrzt_UqOX3aO7Caau-tiCB1QiRocew2XXgHwjNfDXqdGHFqLF7LoCsGz-i7k6mv8kzrGlPQugu0011pQugQEz-eDFf8NlFPOs_jgPlDMxo1PZWk2lc_aupj3y-6LfrWXsjMR-vu-vBPeFTgcuYHl7WDC7joStPuZOak2LTFEMwmHjN5LyvRQPwj3dhbRHqQ
         cmd-args: config config-helper --format=json
-        cmd-path: /Users/anil/Downloads/google-cloud-sdk/bin/gcloud
+        cmd-path: /opt/hostedtoolcache/gcloud/270.0.0/x64/bin/gcloud
         expiry: "2020-02-03T13:23:41Z"
         expiry-key: '{.credential.token_expiry}'
         token-key: '{.credential.access_token}'
