@@ -17,6 +17,7 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
+  KUBECONFIG: /root/config
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
@@ -68,11 +69,13 @@ jobs:
       run: |
         curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
+    - name: Export KUBECONFIG
+      run: cp config /root/config
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6
+        kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --insecure-skip-tls-verify=true
       #gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
       #./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend-test:v6
       #./kustomize build . | kubectl apply -f -      
