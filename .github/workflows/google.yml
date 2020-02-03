@@ -73,11 +73,14 @@ jobs:
       run: sudo cp config /root/config
     - name: Assign Permission to KUBECONFIG
       run: sudo chmod 777 -R /root/config
+    - name: Check Config
+      run: kubectl config view
+    
 
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --insecure-skip-tls-verify=true
+        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --kubeconfig=/root/config  --insecure-skip-tls-verify=true
       #gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
       #./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend-test:v6
       #./kustomize build . | kubectl apply -f -      
