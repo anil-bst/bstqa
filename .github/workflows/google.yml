@@ -60,6 +60,7 @@ jobs:
       run: | 
           sudo mkdir -p $HOME/.kube
           sudo chown $(id -u):$(id -g) $HOME/.kube/
+          which gcloud
           
     - name: Export KUBECONFIG
       run: |
