@@ -25,6 +25,7 @@ env:
   IMAGE: node:dubnium-jessie
   REGISTRY_HOSTNAME: gcr.io
   DEPLOYMENT_NAME: qa-frontend
+  CLOUDSDK_PYTHON_SITEPACKAGES: 1
 
 
 jobs:
@@ -35,7 +36,8 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v2
-    - run: pip install pyopenssl
+    - name: install python-openssl
+      run: sudo apt-get install -y python-openssl -o=Dpkg::Use-Pty=0
 
     # Setup gcloud CLI
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
