@@ -71,8 +71,6 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-        ./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend:v5
-        ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/$DEPLOYMENT_NAME
+        kubectl set image deployment/qa-frontend qa-frontend=gcr.io/game-tv-website-qa/qa-frontend:v5
         kubectl get services -o wide
+        kubectl get deployments -o wide
