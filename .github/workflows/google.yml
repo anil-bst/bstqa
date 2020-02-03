@@ -72,7 +72,7 @@ jobs:
     - name: Export KUBECONFIG
       run: sudo cp ./config /root/config
     - name: Check Config Content 
-      run: cat /root/config
+      run: sudo cat /root/config
     - name: Assign Permission to KUBECONFIG
       run: sudo chmod 777 -R /root/config
     - name: Check Config
