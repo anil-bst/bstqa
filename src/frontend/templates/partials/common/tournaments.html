@@ -81,7 +81,7 @@
         {{/with}}
       </div>
       <div class="tournaments-list-details">
-        <div class="empty-state {{#if tournaments.data }}{{else}}show{{/if}}">
+        <div class="empty-state {{ShowEmptyState tournaments.metaData.count  tournaments.data}}">
           {{#with gameInfo}}
           <div class="wrapper">
             <div class="content-1">
@@ -108,14 +108,9 @@
           <ul class="tournaments-list">
               {{#each tournaments.data}}
               <li class="tournament-item hvr-float-shadow">
-                <a href="/tournaments/{{GetTournamentUrl esportsUrl}}">
+                <a href="{{../locales}}/tournaments/{{GetTournamentUrl esportsUrl}}">
                   <figure class="tournament-image">
-                    {{#if primaryPkg}}
-                      <img src='https://cdn.game.tv/game-tv-content/images/default/game_logo/en/{{primaryPkg}}.png' alt="{{game.name}}">
-                    {{/if}}
-                    {{#if ../games/primaryPkg}}
-                      <img src='https://cdn.game.tv/game-tv-content/images/default/game_logo/en/{{../games/primaryPkg}}.png' alt="{{../game.name}}">
-                    {{/if}}
+                    <img src="{{game.media.default.iconUrl}}" alt="{{game.name}}">
                   </figure>
                 </a>
                 <div class="game-wrapper">
@@ -130,7 +125,7 @@
                     <p class="country-name">{{StringSlice adminLocale 0 2 }}</p>
                   </div>
                 </div>
-                <a href="/tournaments/{{GetTournamentUrl esportsUrl}}">
+                <a href="{{../locales}}/tournaments/{{GetTournamentUrl esportsUrl}}">
                   <div class="tournament-details">
                     <div class="platform-details">
                       <p class="platform">{{../platformStr}}</p>
@@ -153,9 +148,9 @@
 
             <div class="loader hide"><img src="https://cdn.game.tv/tourney-preloader.svg" class="img-responsive" alt="loading.."></div>
             {{#if game.slug}}
-              <a href="/{{seoUrlsData.locale}}/find-tournaments/{{game.slug}}?page={{NextCount tournaments.metaData.page}}" class="view-more {{ShowViewMore tournaments.metaData.isLastBatch}}">
+              <a href="{{CheckLocale seoUrlsData.locale}}{{../locales}}/find-tournaments/{{game.slug}}?page={{NextCount tournaments.metaData.page}}" class="view-more {{ShowViewMore tournaments.metaData.isLastBatch}}">
             {{else}}
-              <a href="/{{seoUrlsData.locale}}/find-tournaments?page={{NextCount tournaments.metaData.page}}" class="view-more {{ShowViewMore tournaments.metaData.isLastBatch}}">
+              <a href="{{CheckLocale seoUrlsData.locale}}{{../locales}}/find-tournaments?page={{NextCount tournaments.metaData.page}}" class="view-more {{ShowViewMore tournaments.metaData.isLastBatch}}">
             {{/if}}
               <button class="view">{{viewMore}}</button>
             </a>

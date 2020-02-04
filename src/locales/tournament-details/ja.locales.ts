@@ -1,4 +1,8 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinJapanese } from './../how-to-join/ja.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.JAPANESE;
+
 export const TournamentDetailLocaleJapanese: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +21,11 @@ export const TournamentDetailLocaleJapanese: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: '{{tournamentName}}のトーナメントへのエントリー方法',
-      content: [
-        'Discordの#tournament-infoチャンネルにてトーナメントの詳細を確認することができます。',
-        '#tournament-infoチャンネルの下にある#tournament-lobbyをクリックしてください。',
-        'トーナメントにエントリーする際は、#tournament-lobbyチャンネルにて「!register」と入力します。',
-        'TourneyボットによってDM（ダイレクトメッセージ）が送信されたら、DM内にて!joinsolo <ゲームで使用しているユーザー名>を入力します。',
-        '{{tournamentName}}のトーナメントにエントリーしました。',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: '{{howToJoinTitle}}のトーナメントへのエントリー方法',
+      blocks: HowToJoinJapanese.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

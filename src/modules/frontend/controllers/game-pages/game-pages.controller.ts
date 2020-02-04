@@ -119,19 +119,18 @@ export class GamePagesController extends AbstractLocalisedController {
       this.apiService.getMetaData(),
     ]);
 
-    gameDetail['gameId'] = gameSlug; // remove if present in api : need to recheck
     const gameTournaments = {
       data: {},
       metaData: {},
     };
     if (gameDetail) {
-      const gamePkg = gameDetail.primaryPkg;
+      const gameId = gameDetail.gameId;
       const gameTournamentsResp = await this.apiService.getTournaments(
         'all',
         12,
         locale,
         cursor,
-        gamePkg,
+        gameId,
       );
       if (gameTournamentsResp) {
         const { data, metaData } = gameTournamentsResp as any;
@@ -149,7 +148,6 @@ export class GamePagesController extends AbstractLocalisedController {
       throw new NotFoundException();
     }
 
-    // console.log('game detail tournament: ', gameTournaments);
     return {
       locale,
       route: GAME_ROUTES.GAME_DETAILS,

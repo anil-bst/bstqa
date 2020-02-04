@@ -3,27 +3,39 @@ import { Utils } from './utils';
 import { SupportedLocalesEnum } from '@app/enums';
 import { FindTournamentLocales } from '@app/locales/find-tournaments';
 import { GameDetailsLocales } from '@app/locales/game-details';
+import { threadId } from 'worker_threads';
 
-// check for already existing pagenum in url
-const url = window.location.href;
-const pageUrl = 'find-tournaments';
+class TournamentFilters {
+  url: string;
+  pageUrl: string;
+  pageNum: number;
+  locale: string;
+  nextCursor: string;
+  constructor() {
+    this.url = window.location.href;
+    this.pageUrl = 'find-tournaments';
+    this.pageNum = 2;
+    this.nextCursor = '';
+    this.locale =
+      document.getElementsByTagName('html')[0].getAttribute('lang') ||
+      SupportedLocalesEnum.ENGLISH;
 
-let pageNum: number = 2;
+    if (this.url.includes('page')) {
+      const mainPageEle = document.querySelector(
+        '.main-container',
+      ) as HTMLElement;
+      this.pageNum = parseInt(mainPageEle.dataset.page, 10) + 1;
+    }
 
-if (url.includes('page')) {
-  const mainPageEle = document.querySelector('.main-container') as HTMLElement;
-  pageNum = parseInt(mainPageEle.dataset.page, 10) + 1;
-}
-// const locale = Utils.getCookieValue('locale') || SupportedLocalesEnum.ENGLISH;
-const locale =
-  document.getElementsByTagName('html')[0].getAttribute('lang') ||
-  SupportedLocalesEnum.ENGLISH;
+    this.loadMoreData = this.loadMoreData.bind(this);
+    this.saveFilter = this.saveFilter.bind(this);
+    this.emptyStateViewAll = this.emptyStateViewAll.bind(this);
+  }
 
-export default class TournamentFilters {
   /*
    * toggleDropDown: toggle filter dropdown
    */
-  static toggleDropDown(target) {
+  toggleDropDown(target) {
     const listToBeOpened = target
       .closest('.filter-item')
       .querySelector('.filter-list') as HTMLUListElement;
@@ -44,7 +56,7 @@ export default class TournamentFilters {
   /*
    * closeAllDropdown: closes all opened dropdowns
    */
-  static closeAllDropdown() {
+  closeAllDropdown() {
     const lists = document.querySelectorAll('.filter-list');
     lists.forEach(item => {
       if (item.classList.contains('show-list')) {
@@ -53,29 +65,19 @@ export default class TournamentFilters {
     });
   }
 
-  static toggleEmptyState(show = false) {
-    const emptyState = document.querySelector('.empty-state');
-    if (show) {
-      TournamentFilters.resetUrl();
-      emptyState.classList.add('show');
-    } else {
-      emptyState.classList.remove('show');
-    }
-  }
-
   /*
    * resetUrl: remove query parameter of page from url
    */
-  static resetUrl() {
+  resetUrl() {
     const pageEle = document.querySelector('.main-container') as HTMLElement; // if slug exists
     const slug = pageEle.dataset.slug;
-    let urlToBePushed = `/${pageUrl}`;
+    let urlToBePushed = `/${this.pageUrl}`;
     const urlOrigin = window.location.origin;
     const checkLocale = window.location.href
       .split(window.location.host)[1]
       .split('/')[1];
-    if (locale === checkLocale) {
-      urlToBePushed = `/${locale}${urlToBePushed}`;
+    if (this.locale === checkLocale) {
+      urlToBePushed = `/${this.locale}${urlToBePushed}`;
     }
     if (slug) {
       urlToBePushed = `${urlToBePushed}/${slug}`;
@@ -87,24 +89,34 @@ export default class TournamentFilters {
     const mainContainerEle = document.querySelector(
       '.main-container',
     ) as HTMLElement;
-    pageNum = 2;
+    this.pageNum = 2;
     mainContainerEle.dataset.page = '1';
+  }
+
+  toggleEmptyState(show = false) {
+    const emptyState = document.querySelector('.empty-state');
+    if (show) {
+      this.resetUrl();
+      emptyState.classList.add('show');
+    } else {
+      emptyState.classList.remove('show');
+    }
   }
 
   /*
    * updatePageNumberInUrl: update query parameter of page in url
    */
-  static updatePageNumberInUrl(selectedPage) {
+  updatePageNumberInUrl(selectedPage) {
     const pageEle = document.querySelector('.main-container') as HTMLElement; // if slug exists
     const slug = pageEle.dataset.slug;
     const cursor = pageEle.dataset.cursor;
-    let urlToBePushed = `/${pageUrl}`;
+    let urlToBePushed = `/${this.pageUrl}`;
     const urlOrigin = window.location.origin;
     const checkLocale = window.location.href
       .split(window.location.host)[1]
       .split('/')[1];
-    if (locale === checkLocale) {
-      urlToBePushed = `/${locale}${urlToBePushed}`;
+    if (this.locale === checkLocale) {
+      urlToBePushed = `/${this.locale}${urlToBePushed}`;
     }
     if (slug) {
       urlToBePushed = `${urlToBePushed}/${slug}`;
@@ -114,24 +126,27 @@ export default class TournamentFilters {
     window.history.pushState(urlOrigin, 'update url', urlToBePushed);
 
     // update page number in data-page of main container
-    const pageCounterEle = document.querySelector(
+    const mainContainerEle = document.querySelector(
       '.main-container',
     ) as HTMLElement;
-    pageCounterEle.dataset.page = '' + selectedPage; // pageNum refers to next page
+    mainContainerEle.dataset.page = '' + selectedPage; // pageNum refers to next page
+    mainContainerEle.dataset.cursor = this.nextCursor;
   }
 
   /*
    * updateView: updates view on filter selection
    */
-  static updateView(resp, filter = false) {
+  updateView(resp, filter = false) {
     const { data, metaData } = resp;
     // update count
     const { count, limit } = metaData;
-    const countHeading = document.querySelector(
-      '.count-tournaments',
-    ) as HTMLElement;
-    const headingText = count > 0 ? ApiService.numberWithCommas(count) : '';
-    countHeading.innerText = headingText;
+    if (filter) {
+      const countHeading = document.querySelector(
+        '.count-tournaments',
+      ) as HTMLElement;
+      const headingText = count > 0 ? ApiService.numberWithCommas(count) : '';
+      countHeading.innerText = headingText;
+    }
 
     const documentFragment = document.createDocumentFragment();
     const tournamentListWrapper = document.querySelector('ul.tournaments-list');
@@ -144,7 +159,7 @@ export default class TournamentFilters {
       }
     }
 
-    if (count) {
+    if (count || (data && data.length)) {
       this.toggleEmptyState(false);
       // update tournament's card
       data.forEach(card => {
@@ -173,7 +188,7 @@ export default class TournamentFilters {
         figureElement.className = 'tournament-image';
 
         const bannerImgEle = document.createElement('img') as HTMLImageElement;
-        bannerImgEle.src = `https://cdn.game.tv/game-tv-content/images/default/game_logo/en/${primaryPkg}.png`;
+        bannerImgEle.src = game.media.default.iconUrl;
         bannerImgEle.alt = name;
 
         figureElement.appendChild(bannerImgEle);
@@ -184,10 +199,10 @@ export default class TournamentFilters {
 
         const anchorEle = document.createElement('a');
         if (game) {
-          let gamePath = `/${locale.replace(/"/g, '')}/find-tournaments/${
+          let gamePath = `/${this.locale.replace(/"/g, '')}/find-tournaments/${
             game.slug
           }`;
-          if (locale === SupportedLocalesEnum.ENGLISH) {
+          if (this.locale === SupportedLocalesEnum.ENGLISH) {
             gamePath = `/find-tournaments/${game.slug}`;
           }
           anchorEle.href = game && `${gamePath}`;
@@ -257,13 +272,13 @@ export default class TournamentFilters {
         ) as HTMLParagraphElement;
         contentItem1.className = 'platform';
 
-        let pageLocale = FindTournamentLocales[locale];
+        let pageLocale = FindTournamentLocales[this.locale];
         const pageEle = document.querySelector(
           '.main-container',
         ) as HTMLElement; // if slug exists
         const slug = pageEle.dataset.slug;
         if (slug) {
-          pageLocale = GameDetailsLocales[locale];
+          pageLocale = GameDetailsLocales[this.locale];
         }
         contentItem1.innerText = pageLocale.platformStr;
 
@@ -357,7 +372,7 @@ export default class TournamentFilters {
   /*
    * addFilterSearchEvent: adding events on filters (geo/tournament status/language)
    */
-  static addFilterSearchEvent() {
+  addFilterSearchEvent() {
     const selectBtn = document.querySelectorAll('.select-btn') as NodeList;
 
     selectBtn.forEach(btn => {
@@ -365,7 +380,7 @@ export default class TournamentFilters {
         const target = e.target as HTMLElement;
         e.stopPropagation();
         this.toggleDropDown(target);
-        pageNum = 2;
+        this.pageNum = 2;
       });
     });
 
@@ -425,18 +440,16 @@ export default class TournamentFilters {
           geo: geoVal,
           status: statusVal,
           lang: langEleVal,
-          locale,
+          locale: this.locale,
           cursor: '',
           game_pkg: gamePkg,
+          isCountRequired: true,
         };
         const data = await ApiService.fetchData(configObj);
         if (Object.keys(data).length > 0) {
-          TournamentFilters.resetUrl();
-          const mainContainerEle = document.querySelector(
-            '.main-container',
-          ) as HTMLElement;
-          mainContainerEle.dataset.cursor = data.metaData.cursor;
-          TournamentFilters.updateView(data, true);
+          this.resetUrl();
+          this.nextCursor = data.metaData.cursor;
+          this.updateView(data, true);
         }
       });
     });
@@ -449,24 +462,24 @@ export default class TournamentFilters {
   /*
    * openTab: handling tab functionality
    */
-  static openTab(evt) {
+  openTab(evt) {
     // Declare all variables
-    let i;
     let tabcontent;
     let tablinks;
     const tabName = evt.target && evt.target.dataset.tab;
 
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName('tabcontent');
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = 'none';
+
+    for (const tab of tabcontent) {
+      tab.style.display = 'none';
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName('tablinks');
-    for (i = 0; i < tablinks.length; i++) {
-      if (tablinks[i].classList.contains('active')) {
-        tablinks[i].classList.remove('active');
+    for (const tab of tablinks) {
+      if (tab.classList.contains('active')) {
+        tab.classList.remove('active');
       }
     }
 
@@ -478,7 +491,7 @@ export default class TournamentFilters {
   /*
    * showMobileFilterMenu: show mobile menu on click of filter icon
    */
-  static showMobileFilterMenu() {
+  showMobileFilterMenu() {
     const filterEle = document.querySelector('.filters');
     if (!filterEle.classList.contains('show-filter')) {
       filterEle.classList.add('show-filter');
@@ -486,7 +499,7 @@ export default class TournamentFilters {
     document.body.classList.add('active-overlay');
   }
 
-  static closeMobileFilterMenu() {
+  closeMobileFilterMenu() {
     document.body.classList.remove('active-overlay');
     document.querySelector('.filters').classList.remove('show-filter');
   }
@@ -494,7 +507,7 @@ export default class TournamentFilters {
   /*
    * selectMenuItem: select geo/status/lang items
    */
-  static selectMenuItem(e) {
+  selectMenuItem(e) {
     const selectedEle = e.target.closest('li');
     const checkFilter = selectedEle.dataset.geo
       ? 'geo'
@@ -518,7 +531,7 @@ export default class TournamentFilters {
     }
   }
 
-  static scrollToTournamentSection() {
+  scrollToTournamentSection() {
     const scrollElement = document.querySelector(
       'section.tournaments',
     ) as HTMLElement;
@@ -527,10 +540,11 @@ export default class TournamentFilters {
       behavior: 'smooth',
     });
   }
+
   /*
    * saveFilter: call API on click of save button (mobile only)
    */
-  static async saveFilter() {
+  async saveFilter() {
     const selectedItems = document.querySelectorAll(
       '[class*=selected-filter-]',
     ) as any;
@@ -566,27 +580,25 @@ export default class TournamentFilters {
       geo,
       status,
       lang,
-      locale,
+      locale: this.locale,
       cursor: '',
       game_pkg: gamePkg,
+      isCountRequired: true,
     };
     const data = await ApiService.fetchData(configObj);
     if (Object.keys(data).length > 0) {
-      TournamentFilters.resetUrl();
-      TournamentFilters.updateView(data, true);
-      TournamentFilters.closeMobileFilterMenu();
-      TournamentFilters.scrollToTournamentSection();
-      const mainContainerEle = document.querySelector(
-        '.main-container',
-      ) as HTMLElement;
-      mainContainerEle.dataset.cursor = data.metaData.cursor;
+      this.resetUrl();
+      this.updateView(data, true);
+      this.closeMobileFilterMenu();
+      this.scrollToTournamentSection();
+      this.nextCursor = data.metaData.cursor;
     }
   }
 
   /*
    * resetMobileFilter: reset all selected filter
    */
-  static resetMobileFilter() {
+  resetMobileFilter() {
     // select selected values for geo/status/lang
     const selectedItems = document.querySelectorAll(
       '[class*=selected-filter-]',
@@ -607,7 +619,7 @@ export default class TournamentFilters {
   /*
    * addTabEventMobile : attaching all events required for filter in case of mobile
    */
-  static addTabEventMobile() {
+  addTabEventMobile() {
     // filter icon
     document
       .querySelector('.filter-icon')
@@ -638,7 +650,7 @@ export default class TournamentFilters {
 
   // ********************************Methods for Mobile ends*********************************//
 
-  static async loadMoreData(e) {
+  async loadMoreData(e) {
     e.preventDefault();
     // call service
     const geoEle = document.querySelector(
@@ -670,9 +682,10 @@ export default class TournamentFilters {
       geo: geoVal,
       status: statusVal,
       lang: langEleVal,
-      locale,
+      locale: this.locale,
       cursor,
       game_pkg: gamePkg,
+      isCountRequired: false,
     };
     const paginationData = await ApiService.fetchData(configObj);
     if (Object.keys(paginationData).length > 0) {
@@ -681,32 +694,29 @@ export default class TournamentFilters {
         '.view-more',
       ) as HTMLAnchorElement;
       let newUrl = viewMoreEle.href.split('page=')[0];
-      newUrl = `${newUrl}page=${pageNum + 1}`;
+      newUrl = `${newUrl}page=${this.pageNum + 1}`;
       viewMoreEle.href = newUrl;
-      const mainContainerEle = document.querySelector(
-        '.main-container',
-      ) as HTMLElement;
-      mainContainerEle.dataset.cursor = paginationData.metaData.cursor;
+      this.nextCursor = paginationData.metaData.cursor;
       // remove loader
       document.querySelector('.loader').classList.remove('show');
       document.querySelector('.loader').classList.add('hide');
       e.target.classList.remove('hide');
-      pageNum++;
+      this.pageNum++;
 
       // update url in case of pagination
-      TournamentFilters.updatePageNumberInUrl(pageNum - 1);
-      TournamentFilters.updateView(paginationData, false);
+      this.updatePageNumberInUrl(this.pageNum - 1);
+      this.updateView(paginationData, false);
     }
   }
 
-  static pagination() {
+  pagination() {
     const viewMoreBtn = document.querySelector('.view-more .view');
     if (viewMoreBtn) {
-      viewMoreBtn.addEventListener('click', TournamentFilters.loadMoreData);
+      viewMoreBtn.addEventListener('click', this.loadMoreData);
     }
   }
 
-  static addTimeZoneAbbr() {
+  addTimeZoneAbbr() {
     const allElements = document.querySelectorAll('.add-timezoneAbbr') as any;
     const timezoneName = ApiService.getTimeZoneAbbr();
     allElements.forEach(item => {
@@ -714,7 +724,7 @@ export default class TournamentFilters {
     });
   }
 
-  static async emptyStateViewAll(e) {
+  async emptyStateViewAll(e) {
     e.preventDefault();
     // check for no data
     const pageCounterEle = document.querySelector(
@@ -733,22 +743,20 @@ export default class TournamentFilters {
       geo: 'all',
       status: 'all',
       lang: 'all',
-      locale,
+      locale: this.locale,
       cursor: '',
       game_pkg: gamePkg,
+      isCountRequired: true,
     };
     const data = await ApiService.fetchData(configObj);
     if (Object.keys(data).length > 0) {
       if (data.metaData && data.metaData.count) {
-        TournamentFilters.resetUrl();
-        TournamentFilters.updateView(data, true);
-        const mainContainerEle = document.querySelector(
-          '.main-container',
-        ) as HTMLElement;
-        mainContainerEle.dataset.cursor = data.metaData.cursor;
+        this.resetUrl();
+        this.updateView(data, true);
+        this.nextCursor = data.metaData.cursor;
         if (window.screen.width < 768) {
           // mobile
-          TournamentFilters.resetMobileFilter();
+          this.resetMobileFilter();
           document
             .querySelector('.geo-list li[data-geo=all]')
             .classList.add('selected-filter-geo');
@@ -792,16 +800,21 @@ export default class TournamentFilters {
     }
   }
 
-  static init() {
+  init() {
     if (window.screen.width < 768) {
-      TournamentFilters.addTabEventMobile();
+      this.addTabEventMobile();
     } else {
-      TournamentFilters.addFilterSearchEvent();
+      this.addFilterSearchEvent();
     }
-    TournamentFilters.addTimeZoneAbbr();
-    TournamentFilters.pagination();
-    document
-      .querySelector('.no-available-data')
-      .addEventListener('click', TournamentFilters.emptyStateViewAll);
+    this.addTimeZoneAbbr();
+    this.pagination();
+    if (document.querySelector('.no-available-data')) {
+      document
+        .querySelector('.no-available-data')
+        .addEventListener('click', this.emptyStateViewAll);
+    }
   }
 }
+
+const tournamentFilters = new TournamentFilters();
+export default tournamentFilters;

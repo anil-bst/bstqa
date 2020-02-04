@@ -1,4 +1,8 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinChinese } from './../how-to-join/tw.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.CHINESE;
+
 export const TournamentDetailLocaleChinese: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +21,11 @@ export const TournamentDetailLocaleChinese: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: '如何參加 {{tournamentName}} 錦標賽',
-      content: [
-        '前往Discord中的＃tournament-info文字頻道以了解比賽詳細資訊',
-        '點擊＃tournament-info頻道底部的＃tournament-lobby',
-        '想參加比賽，請在＃tournament-lobby頻道中輸入!register',
-        'Tourney 機器人將會傳給您一則私人訊息，請在私訊中輸入!joinsolo <您的遊戲ID>來報名比賽',
-        '您已成功報名 {{tournamentName}} 錦標賽。',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: '如何參加 {{howToJoinTitle}} 錦標賽',
+      blocks: HowToJoinChinese.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

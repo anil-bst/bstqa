@@ -1,4 +1,8 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinSpanish } from './../how-to-join/es.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.SPANISH;
+
 export const TournamentDetailLocaleSpanish: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +21,11 @@ export const TournamentDetailLocaleSpanish: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: 'Cómo unirse a un torneo de {{tournamentName}}',
-      content: [
-        'Ve al canal de texto #tournament-info en Discord para conocer los detalles del torneo.',
-        'Haz clic en el #tournament-lobby en la parte inferior del #tournament-info del torneo',
-        'Para participar en el torneo, escriba !register en el canal #tournament-lobby',
-        'Tourney bot te enviará un mensaje directo; escribe !joinsolo <tu nombre de usuario en el juego> en MD',
-        'Te has registrado con éxito en el torneo {{tournamentName}}.',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: 'Cómo unirse a un torneo de {{howToJoinTitle}}',
+      blocks: HowToJoinSpanish.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

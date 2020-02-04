@@ -77,7 +77,9 @@ export class LocaleUtils {
    * @param response: response with locale returned from controller, and data to show in templates
    */
   getCommonLocalesData(response: IRenderer): IRenderer {
-    const { locale = SupportedLocalesEnum.ENGLISH, route } = response;
+    let { locale } = response;
+    const { route } = response;
+    locale = SUPPORTED_LOCALES[locale] ? locale : SupportedLocalesEnum.ENGLISH;
     const supportedLocalesData = this.getSupportedLocalesData(route);
     const bodyClass = route.paths[0];
     let direction = 'ltr';

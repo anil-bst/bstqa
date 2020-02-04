@@ -53,6 +53,7 @@ $color__darkgrey3__bg:#161d22;
 
   &-info-section {
     padding-bottom: 48px;
+    background-color: #12181c;
   }
 
   .category-wrapper {
@@ -101,7 +102,7 @@ $color__darkgrey3__bg:#161d22;
     justify-content: space-between;
     align-items: center;
 
-    button {
+    .btn {
       width: 100%;
       background-color: $color__blue;
       box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
@@ -234,6 +235,8 @@ $color__darkgrey3__bg:#161d22;
 
   &-content-section {
     // padding: 48px 0;
+    background-color: #161d22;
+
     .heading {
       text-transform: capitalize;
       margin: 48px 0 16px;
@@ -297,6 +300,81 @@ $color__darkgrey3__bg:#161d22;
       margin: 8px 0;
     }
   }
+
+  .how-to-join-wrapper,
+  .start-tournament {
+    margin: 48px 0 0;
+
+    .heading {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .join-tournament-list,
+    .start-tournament-list {
+      .join-item .steps-list,
+      .start-item .steps-list {
+        .steps-desc {
+          flex-direction: column;
+        }
+
+        .step-item {
+          display: flex;
+          flex-direction: column;
+
+          .step-content {
+            order: 2;
+            padding-left: 20px;
+
+            &::before {
+              left: 0;
+            }
+          }
+
+          .step-image {
+            display: block;
+            height: 210px;
+            width: 100%;
+
+            img {
+              max-height: 100%;
+              max-width: 100%;
+            }
+          }
+        }
+      }
+
+      .steps-image-section {
+        display: none;
+      }
+    }
+  }
+
+  html[dir="rtl"] {
+    .how-to-join-wrapper {
+      .join-tournament-list {
+        .join-item {
+          .steps-image-section {
+            margin-right: 52px;
+            margin-left: inherit;
+          }
+
+          .step-content {
+            &::before {
+              left: inherit;
+              right: -30px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .tournament-detail .how-to-join-wrapper .join-tournament-list .join-item .steps-image-section {
+    width: 40%;
+  }
 }
 
 @media (min-width: 769px) {
@@ -319,7 +397,7 @@ $color__darkgrey3__bg:#161d22;
       justify-content: space-between;
       align-items: flex-end;
 
-      button {
+      .btn {
         max-width: 242px;
         margin-bottom: 0;
       }
@@ -386,14 +464,6 @@ $color__darkgrey3__bg:#161d22;
       }
     }
 
-    .how-to-join-wrapper {
-      .content {
-        &::before {
-          left: -20px;
-        }
-      }
-    }
-
     .video-wrapper img {
       width: 41px;
     }
@@ -412,6 +482,128 @@ $color__darkgrey3__bg:#161d22;
         font-size: 20px;
         line-height: 1.4;
         margin: 8px 0;
+      }
+    }
+
+    .how-to-join-wrapper {
+      margin: 80px 0 0;
+
+      .content {
+        &::before {
+          left: -20px;
+        }
+      }
+
+      .heading {
+        font-size: 24px;
+        line-height: 28px;
+      }
+
+      .join-tournament-list,
+      .start-tournament-list {
+        .join-item,
+        .start-item {
+          .steps {
+            color: #dae1e6;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 28px;
+            margin: 32px 0 24px;
+
+            .steps-h {
+              color: #a4aeb6;
+              position: relative;
+              margin-left: 6px;
+
+              &::before {
+                content: ":";
+                position: absolute;
+                left: -9px;
+                top: -3px;
+              }
+            }
+          }
+
+          .steps-desc {
+            display: flex;
+            align-items: center;
+          }
+
+          .steps-list {
+            counter-reset: section;
+            flex: 1;
+
+            .step-item {
+              position: relative;
+              padding: 0 0 24px;
+              margin: 0 0 24px;
+
+              &::after {
+                background-color: #242f38;
+                position: absolute;
+                content: "";
+                height: 1px;
+                width: 100%;
+                bottom: 0;
+                left: 0;
+              }
+
+              .step-content {
+                color: #85939d;
+                font-size: 18px;
+                line-height: 28px;
+                position: relative;
+                margin: 0;
+                cursor: pointer;
+
+                .click-here {
+                  color: #426bff;
+
+                  &:hover,
+                  &:focus,
+                  &:active {
+                    color: #426bff;
+                  }
+                }
+
+                &::before {
+                  counter-increment: section;
+                  content: counter(section);
+                  position: absolute;
+                  left: -30px;
+                  top: 0;
+                }
+              }
+
+              .step-image {
+                display: none;
+              }
+            }
+
+            .active {
+              .step-content {
+                color: #a4aeb6;
+                font-weight: 500;
+              }
+
+              &::after {
+                background-color: #426bff;
+              }
+            }
+          }
+
+          .steps-image-section {
+            height: 364px;
+            width: 547px;
+            margin-left: 32px;
+            display: block;
+
+            img {
+              max-width: 100%;
+              max-height: 100%;
+            }
+          }
+        }
       }
     }
   }

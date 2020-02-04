@@ -13,6 +13,7 @@ interface Content {
 interface ISteps {
   gamePlatform: string;
   stepsHeading: string;
+  type?: string;
   firstImage: string;
   stepsContent: Content[];
 }

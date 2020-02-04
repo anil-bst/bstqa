@@ -1,4 +1,8 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinVietnamese } from './../how-to-join/vi.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.VIETNAMESE;
+
 export const TournamentDetailLocaleVietnamese: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +21,11 @@ export const TournamentDetailLocaleVietnamese: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: 'Làm thế nào để tham gia giài đấu {{tournamentName}}',
-      content: [
-        'Vào kênh #tournament-info trong Discord để biết chi tiết giải đấu',
-        'Nhấn vào #tournament-lobby ở bên dưới kênh #tournament-info',
-        'Để tham gia giải đấu, hãy gõ !register trong channel #tournament-lobby',
-        'Bot Tourney sẽ gửi cho bạn một tin nhắn trực tiếp (Direct Message - DM), bạn hãy gõ !joinsolo <tên-trong-game> tại đây',
-        'Bạn đã đăng ký thành công cho giải đấu {{gameName}} ',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: 'Làm thế nào để tham gia giài đấu {{howToJoinTitle}}',
+      blocks: HowToJoinVietnamese.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

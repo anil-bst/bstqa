@@ -1,4 +1,7 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinEnglish } from './../how-to-join/en.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.ENGLISH;
 export const TournamentDetailLocaleEnglish: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +20,11 @@ export const TournamentDetailLocaleEnglish: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: 'How to Join',
-      content: [
-        'Go to the #tournament-info text channel in Discord to know about tournament details',
-        'Click on #tournament-lobby at the bottom of #tournament-info channel',
-        'To participate in the tournament, type !register in #tournament-lobby channel',
-        'Tourney bot will send you a Direct Message; type !joinsolo <your in-game username> in DM',
-        'You have successfully registered for the {{tournamentName}} tournament.',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: 'How to Join {{howToJoinTitle}} tournament',
+      blocks: HowToJoinEnglish.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: '',
 };

@@ -231,7 +231,6 @@ class AutocompleteOnKeypress {
   removeSuggestionList() {
     let queryStr = `.js-search-${this.locationOfSearch} .autocomplete-suggestions`;
     const suggestionList = document.querySelector(queryStr);
-    // queryStr = `.js-search-${this.locationOfSearch} .suggestion-list`;
     if (suggestionList && suggestionList.classList.contains('open')) {
       suggestionList.classList.remove('open');
       // destroy suggestion list

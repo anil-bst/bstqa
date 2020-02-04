@@ -6,6 +6,17 @@ interface ImediaContent {
   bannerUrl: string;
 }
 
+interface Content {
+  stepItem: string;
+  imgUrl: string;
+}
+interface ISteps {
+  gamePlatform: string;
+  stepsHeading: string;
+  firstImage: string;
+  stepsContent: Content[];
+}
+
 export interface ITournamentDetailLocale {
   metadata: IMetadataLocale;
   linkToAllTournaments: string;
@@ -22,10 +33,10 @@ export interface ITournamentDetailLocale {
     ruleSectionHeading: string;
     howToJoinSection: {
       heading: string;
-      content: string[];
-      imgUrl: string;
+      blocks: ISteps[];
     };
     prizeSectionHeading: string;
   };
   organiserText: string;
+  locales: string;
 }

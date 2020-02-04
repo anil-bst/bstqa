@@ -1,4 +1,7 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinArabic } from './../how-to-join/ar.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.ARABIC;
 export const TournamentDetailLocaleArabic: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +20,11 @@ export const TournamentDetailLocaleArabic: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: 'كيفية الانضمام إلى {{tournamentName}} البطولة',
-      content: [
-        'انتقل إلى #tournament-info النص معلومات المسابقة في Discord لمعرفة تفاصيل البطولة',
-        'انقر على #tournament-lobby في الجزء السفلي من #tournament-info channel',
-        'للمشاركة في البطولة ، اكتب! قم بالتسجيل في#tournament-lobby',
-        'سوف يقوم Tourney  بإرسال رسالة مباشرة إليك ؛ اكتب !joinsolo & lt!؛ اسم المستخدم الخاص بك في اللعبة> في رسالة مباشرة',
-        'لقد قمت بالتسجيل بنجاح في {{tournamentName}} البطولة.',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: 'كيفية الانضمام إلى {{howToJoinTitle}} البطولة',
+      blocks: HowToJoinArabic.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

@@ -33,10 +33,11 @@ export class ApiService {
       locale,
       cursor,
       game_pkg,
+      isCountRequired = false,
     } = confiObj;
     const baseUrl = `${BASE_URL}/tournaments`;
     const response = await fetch(
-      `${baseUrl}?limit=${limit}&geo=${geo}&status=${status}&lang=${lang}&locale=${locale}&cursor=${cursor}&game_pkg=${game_pkg}`,
+      `${baseUrl}?limit=${limit}&geo=${geo}&status=${status}&lang=${lang}&locale=${locale}&cursor=${cursor}&game_pkg=${game_pkg}&is_count_required=${isCountRequired}`,
     );
     if (response.ok) {
       const json = await response.json();
@@ -66,7 +67,9 @@ export class ApiService {
    * numberWithCommas: converts numbers with comma separated
    */
   static numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
   }
 
   static getTournamentUrl(esportsUrl) {

@@ -2,7 +2,7 @@ import Swiper from 'swiper';
 import { ApiService } from '../common/api-service';
 import { Utils } from '../common/utils';
 import { SupportedLocalesEnum } from '@app/enums';
-import TournamentFilters from './../common/tournament-filters';
+import tournamentFilters from './../common/tournament-filters';
 import autocompleteOnKeypress from './../common/autocomplete';
 
 const locale =
@@ -56,7 +56,7 @@ export class FindTournaments {
       FindTournaments.enableSwiper();
     }
     // Utils.attachSearchEvents('search-form-wrapper');
-    TournamentFilters.init();
+    tournamentFilters.init();
     autocompleteOnKeypress.init('tournaments');
     FindTournaments.discoverMore();
   }

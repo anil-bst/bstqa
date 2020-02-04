@@ -10,19 +10,10 @@ import { GamesService } from '@games/games.service';
 import { TournamentsService } from '@tournaments/tournaments.service';
 import moment from 'moment';
 import { environments } from '@app/environments';
-import { APP_CONST } from '@app/constants';
-
-const STATIC_PAGE_SITE_MAP_SLUG = APP_CONST.STATIC_PAGE_SITE_MAP_SLUG;
-const GAME_SITE_MAP_SLUG = APP_CONST.GAME_SITE_MAP_SLUG;
-const TOURNAMNETS_SITE_MAP_SLUG = APP_CONST.TOURNAMNETS_SITE_MAP_SLUG;
-const USERS_PROFILE_SITE_MAP_SLUG = APP_CONST.USERS_PROFILE_SITE_MAP_SLUG;
-const INDEX_SITE_MAP_SLUG = APP_CONST.INDEX_SITE_MAP_SLUG;
-const TEMP_SITE_MAP_DIR = APP_CONST.TEMP_SITE_MAP_DIR;
-const SITE_MAP_DIR = APP_CONST.SITE_MAP_DIR;
+import { APP_CONST, SUPPORTED_LOCALES } from '@app/constants';
 
 @Injectable()
 export class CronsService extends NestSchedule {
-  private readonly SITE_MAP_MAX_URLS = 1000;
   constructor(
     private readonly routeUtils: RouteUtils,
     private readonly gamesService: GamesService,
@@ -32,10 +23,11 @@ export class CronsService extends NestSchedule {
   }
   /* cron sitemap genration */
   @Cron(APP_CONST.SITE_MAP_CRON_TIME)
-  async createSiteMapCron() {
+  async createScheduledSiteMap() {
     if (environments.genrateSiteMap === false) {
       return true;
     }
+    console.log('createScheduledSiteMap::starts');
     const indexSiteMapArray = [];
     // creating games urls sitemap
     try {
@@ -43,7 +35,7 @@ export class CronsService extends NestSchedule {
       this.createSiteMapXml(
         indexSiteMapArray,
         gamesPageUrls,
-        GAME_SITE_MAP_SLUG,
+        APP_CONST.GAME_SITE_MAP_SLUG,
       );
     } catch (err) {
       console.log('createSiteMapCron in createSiteMapCron failed::', err);
@@ -70,20 +62,24 @@ export class CronsService extends NestSchedule {
     }
 
     // creating index sitemap
-    this.createIndexSiteMapXml(indexSiteMapArray, INDEX_SITE_MAP_SLUG);
-    indexSiteMapArray.push(`${INDEX_SITE_MAP_SLUG}.xml`);
+    this.createIndexSiteMapXml(
+      indexSiteMapArray,
+      APP_CONST.INDEX_SITE_MAP_SLUG,
+    );
+    indexSiteMapArray.push(`${APP_CONST.INDEX_SITE_MAP_SLUG}.xml`);
+    indexSiteMapArray.push(APP_CONST.STATIC_PAGE_SITE_MAP_SLUG);
     this.copyXmlToSitemap(indexSiteMapArray);
     this.removeGarbageXml(indexSiteMapArray);
-    // console.log('cron end');
+    console.log('createScheduledSiteMap::ends');
   }
 
   /* On Build sitemap genration */
   @Timeout(APP_CONST.SITE_MAP_BUILD_TIME_TIMEOUT)
-  async createSiteMapOnBuild() {
+  async createOnBuildSiteMap() {
     if (environments.genrateSiteMap === false) {
       return true;
     }
-
+    console.log('createOnBuildSiteMap::starts');
     const indexSiteMapArray = [];
     // creating static urls sitemap
     try {
@@ -91,7 +87,7 @@ export class CronsService extends NestSchedule {
       this.createSiteMapXml(
         indexSiteMapArray,
         staticUrls,
-        STATIC_PAGE_SITE_MAP_SLUG,
+        APP_CONST.STATIC_PAGE_SITE_MAP_SLUG,
       );
     } catch (err) {
       console.log(
@@ -106,7 +102,7 @@ export class CronsService extends NestSchedule {
       this.createSiteMapXml(
         indexSiteMapArray,
         gamesPageUrls,
-        GAME_SITE_MAP_SLUG,
+        APP_CONST.GAME_SITE_MAP_SLUG,
       );
     } catch (err) {
       console.log('generateGamePageUrls in createSiteMapOnBuild failed::', err);
@@ -133,11 +129,14 @@ export class CronsService extends NestSchedule {
     }
 
     // creating index sitemap
-    this.createIndexSiteMapXml(indexSiteMapArray, INDEX_SITE_MAP_SLUG);
-    indexSiteMapArray.push(`${INDEX_SITE_MAP_SLUG}.xml`);
+    this.createIndexSiteMapXml(
+      indexSiteMapArray,
+      APP_CONST.INDEX_SITE_MAP_SLUG,
+    );
+    indexSiteMapArray.push(`${APP_CONST.INDEX_SITE_MAP_SLUG}.xml`);
     this.copyXmlToSitemap(indexSiteMapArray);
     this.removeGarbageXml(indexSiteMapArray);
-    // console.log('on build sitemap end');
+    console.log('createOnBuildSiteMap::ends');
   }
 
   private async createTournamentsSiteMap(
@@ -159,21 +158,36 @@ export class CronsService extends NestSchedule {
     const slugArray = tournamentsSlugs.data
       ? tournamentsSlugs.data.slug_data || []
       : [];
-    const urlsArray = slugArray.map(ele => {
-      return {
-        url: environments.appURL + '/tournaments/' + ele.slug,
-        lastmod: moment.unix(ele.modified_at).format('MM-DD-YYYY'),
-      };
+    const supportedLocalesArray = Object.keys(SUPPORTED_LOCALES);
+    supportedLocalesArray.forEach(locale => {
+      const urlsArray = [];
+      slugArray.forEach(tournamentsUrl => {
+        urlsArray.push({
+          url:
+            environments.appURL +
+            '/' +
+            locale +
+            '/tournaments/' +
+            tournamentsUrl.slug,
+          lastmod: moment.unix(tournamentsUrl.modified_at).format('MM-DD-YYYY'),
+        });
+      });
+      const subSlug = index === 0 ? '' : index;
+      const xmlFileName =
+        APP_CONST.TOURNAMNETS_SITE_MAP_SLUG + subSlug + '.xml';
+      console.log(limit, slugArray.length, isLastBatch, subSlug, xmlFileName);
+      indexSiteMapArray.push(xmlFileName);
+      const xmlString = this.getSiteMapXml(urlsArray);
+      if (!fs.existsSync(APP_CONST.TEMP_SITE_MAP_DIR)) {
+        fs.mkdirSync(APP_CONST.TEMP_SITE_MAP_DIR, { recursive: true });
+      }
+      fs.writeFileSync(
+        `${APP_CONST.TEMP_SITE_MAP_DIR}${xmlFileName}`,
+        xmlString,
+        `utf-8`,
+      );
+      index++;
     });
-    const subSlug = index === 0 ? '' : +index;
-    const xmlFileName = TOURNAMNETS_SITE_MAP_SLUG + subSlug + '.xml';
-    console.log(limit, slugArray.length, isLastBatch, subSlug, xmlFileName);
-    indexSiteMapArray.push(xmlFileName);
-    const xmlString = this.getSiteMapXml(urlsArray);
-    if (!fs.existsSync(TEMP_SITE_MAP_DIR)) {
-      fs.mkdirSync(TEMP_SITE_MAP_DIR, { recursive: true });
-    }
-    fs.writeFileSync(`${TEMP_SITE_MAP_DIR}${xmlFileName}`, xmlString, `utf-8`);
     if (isLastBatch || !slugArray.length) {
       return;
     } else {
@@ -181,7 +195,7 @@ export class CronsService extends NestSchedule {
         indexSiteMapArray,
         limit,
         nextCursor,
-        ++index,
+        index,
       );
     }
   }
@@ -212,14 +226,19 @@ export class CronsService extends NestSchedule {
       };
     });
     const subSlug = index === 0 ? '' : +index;
-    const xmlFileName = USERS_PROFILE_SITE_MAP_SLUG + subSlug + '.xml';
+    const xmlFileName =
+      APP_CONST.USERS_PROFILE_SITE_MAP_SLUG + subSlug + '.xml';
     console.log(limit, slugArray.length, isLastBatch, subSlug, xmlFileName);
     indexSiteMapArray.push(xmlFileName);
     const xmlString = this.getSiteMapXml(urlsArray);
-    if (!fs.existsSync(TEMP_SITE_MAP_DIR)) {
-      fs.mkdirSync(TEMP_SITE_MAP_DIR, { recursive: true });
+    if (!fs.existsSync(APP_CONST.TEMP_SITE_MAP_DIR)) {
+      fs.mkdirSync(APP_CONST.TEMP_SITE_MAP_DIR, { recursive: true });
     }
-    fs.writeFileSync(`${TEMP_SITE_MAP_DIR}${xmlFileName}`, xmlString, `utf-8`);
+    fs.writeFileSync(
+      `${APP_CONST.TEMP_SITE_MAP_DIR}${xmlFileName}`,
+      xmlString,
+      `utf-8`,
+    );
     if (isLastBatch || !slugArray.length) {
       return;
     } else {
@@ -263,20 +282,20 @@ export class CronsService extends NestSchedule {
     urlsArray: any[],
     slug: string,
   ) {
-    for (let i = 0; i < urlsArray.length; i += this.SITE_MAP_MAX_URLS) {
+    for (let i = 0; i < urlsArray.length; i += APP_CONST.SITE_MAP_MAX_URLS) {
       const xmlFileName = `${slug +
-        (urlsArray.length > this.SITE_MAP_MAX_URLS
-          ? Math.ceil((i + 1) / this.SITE_MAP_MAX_URLS)
+        (urlsArray.length > APP_CONST.SITE_MAP_MAX_URLS
+          ? Math.ceil((i + 1) / APP_CONST.SITE_MAP_MAX_URLS)
           : '')}.xml`;
       indexSiteMapArray.push(xmlFileName);
       const xmlString = this.getSiteMapXml(
-        urlsArray.slice(i, this.SITE_MAP_MAX_URLS + i),
+        urlsArray.slice(i, APP_CONST.SITE_MAP_MAX_URLS + i),
       );
-      if (!fs.existsSync(TEMP_SITE_MAP_DIR)) {
-        fs.mkdirSync(TEMP_SITE_MAP_DIR, { recursive: true });
+      if (!fs.existsSync(APP_CONST.TEMP_SITE_MAP_DIR)) {
+        fs.mkdirSync(APP_CONST.TEMP_SITE_MAP_DIR, { recursive: true });
       }
       fs.writeFileSync(
-        `${TEMP_SITE_MAP_DIR}${xmlFileName}`,
+        `${APP_CONST.TEMP_SITE_MAP_DIR}${xmlFileName}`,
         xmlString,
         `utf-8`,
       );
@@ -290,10 +309,14 @@ export class CronsService extends NestSchedule {
     const xmlString = buildSitemapIndex({
       urls: indexSiteMapArray,
     });
-    if (!fs.existsSync(TEMP_SITE_MAP_DIR)) {
-      fs.mkdirSync(TEMP_SITE_MAP_DIR, { recursive: true });
+    if (!fs.existsSync(APP_CONST.TEMP_SITE_MAP_DIR)) {
+      fs.mkdirSync(APP_CONST.TEMP_SITE_MAP_DIR, { recursive: true });
     }
-    fs.writeFileSync(`${TEMP_SITE_MAP_DIR}${slug}.xml`, xmlString, `utf-8`);
+    fs.writeFileSync(
+      `${APP_CONST.TEMP_SITE_MAP_DIR}${slug}.xml`,
+      xmlString,
+      `utf-8`,
+    );
   }
 
   private getSiteMapXml(urlsArray: string[]) {
@@ -306,24 +329,24 @@ export class CronsService extends NestSchedule {
   }
 
   private removeGarbageXml(filesToKeepArray: string[]) {
-    fs.readdirSync(SITE_MAP_DIR).forEach(file => {
+    fs.readdirSync(APP_CONST.SITE_MAP_DIR).forEach(file => {
       if (file && !filesToKeepArray.includes(file)) {
-        fs.unlinkSync(SITE_MAP_DIR + file);
+        fs.unlinkSync(APP_CONST.SITE_MAP_DIR + file);
       }
     });
   }
 
   private copyXmlToSitemap(filesToBeCopyArray: string[]) {
-    if (!fs.existsSync(TEMP_SITE_MAP_DIR)) {
-      fs.mkdirSync(TEMP_SITE_MAP_DIR, { recursive: true });
+    if (!fs.existsSync(APP_CONST.TEMP_SITE_MAP_DIR)) {
+      fs.mkdirSync(APP_CONST.TEMP_SITE_MAP_DIR, { recursive: true });
     }
-    if (!fs.existsSync(SITE_MAP_DIR)) {
-      fs.mkdirSync(SITE_MAP_DIR, { recursive: true });
+    if (!fs.existsSync(APP_CONST.SITE_MAP_DIR)) {
+      fs.mkdirSync(APP_CONST.SITE_MAP_DIR, { recursive: true });
     }
-    fs.readdirSync(TEMP_SITE_MAP_DIR).forEach(file => {
+    fs.readdirSync(APP_CONST.TEMP_SITE_MAP_DIR).forEach(file => {
       if (file && filesToBeCopyArray.includes(file)) {
-        fs.createReadStream(`${TEMP_SITE_MAP_DIR}${file}`).pipe(
-          fs.createWriteStream(`${SITE_MAP_DIR}${file}`),
+        fs.createReadStream(`${APP_CONST.TEMP_SITE_MAP_DIR}${file}`).pipe(
+          fs.createWriteStream(`${APP_CONST.SITE_MAP_DIR}${file}`),
         );
       }
     });

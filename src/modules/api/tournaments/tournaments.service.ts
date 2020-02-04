@@ -73,20 +73,34 @@ export class TournamentsService {
     const locale = filterQuies.locale || this.DEFAULT_LOCALE;
     const limit = Math.min(parseInt(filterQuies.limit || 20, 10), 20);
     const status = filterQuies.status || 'live';
+    const isCountRequired: boolean =
+      filterQuies.is_count_required &&
+      (filterQuies.is_count_required === 'true' ||
+        filterQuies.is_count_required === true)
+        ? true
+        : false;
     let query = `?limit=${limit}&status=${status}`;
-    if (filterQuies.cursor) {
+    if (isCountRequired) {
+      query += '&is_count_required=true';
+    }
+    if (filterQuies.cursor && filterQuies.cursor !== 'null') {
       query += `&cursor=${filterQuies.cursor}`;
     }
-    if (filterQuies.geo && filterQuies.geo !== 'all') {
+    if (
+      filterQuies.geo &&
+      filterQuies.geo !== 'all' &&
+      filterQuies.geo !== 'null'
+    ) {
       query += `&geo=${filterQuies.geo}`;
     }
-    if (filterQuies.lang && filterQuies.lang !== 'all') {
+    if (
+      filterQuies.lang &&
+      filterQuies.lang !== 'all' &&
+      filterQuies.lang !== 'null'
+    ) {
       query += `&lang_filter=${filterQuies.lang}`;
     }
-    if (filterQuies.game_pkg) {
-      query += `&game_pkg=${filterQuies.game_pkg}`;
-    }
-    if (filterQuies.game_id) {
+    if (filterQuies.game_id && filterQuies.game_id !== 'null') {
       query += `&game_id=${filterQuies.game_id}`;
     }
     const { data } = await this.httpService

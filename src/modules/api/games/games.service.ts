@@ -6,15 +6,12 @@ import { Games } from './games.interface';
 import { CacheService } from '../../cache/cache.service';
 import { GamesListResponse } from '@app/abstractions/classes/games-list-response.class';
 import { GameResponse } from '@app/abstractions/classes/game-response';
-import { apiConfig } from '@app/config/api.config';
 import { APP_CONST } from '@constants/app.constants';
-import { environments } from '@app/environments';
 
 @Injectable()
 export class GamesService {
   constructor(
     private readonly cacheService: CacheService,
-    private readonly httpService: HttpService,
     @InjectModel('Games') private readonly gameModel: Model<Games>,
   ) {}
 

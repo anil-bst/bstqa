@@ -1,4 +1,8 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinTurkish } from './../how-to-join/tr.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.TURKISH;
+
 export const TournamentDetailLocaleTurkish: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +21,11 @@ export const TournamentDetailLocaleTurkish: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: '{{tournamentName}} Turnuvasına Nasıl Katılırım?',
-      content: [
-        `Turnuva ayrıntıları için Discord'ta yer alan #turnuva-bilgisi kanalına gidin`,
-        `#turnuva-bilgi kanalının altındaki #turnuva-lobisi'ne tıklayın`,
-        'Turnuvaya katılmak için, #turnuva-lobisi kanalına!',
-        `Tourney Botu size bir özel mesaj gönderecek, buraya; !joinsolo &lt;oyun içi gerçek adınız>'ı yazıp, bu mesaja cevap verin.`,
-        '{{gameName}} turnuvasına başarıyla kayıt oldunuz.',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: '{{howToJoinTitle}} Turnuvasına Nasıl Katılırım?',
+      blocks: HowToJoinTurkish.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

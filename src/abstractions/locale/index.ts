@@ -11,3 +11,4 @@ export * from './find-tournaments-locale.interface';
 export * from './game-details-locale.interface';
 export * from './create-a-tournament.interface';
 export * from './tournament-detail.interface';
+export * from './how-to-join.interface';

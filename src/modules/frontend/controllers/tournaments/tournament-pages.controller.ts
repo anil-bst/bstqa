@@ -42,27 +42,37 @@ export class TournamentPagesController extends AbstractLocalisedController {
     @Param('tournament')
     tournamentSlug: string,
   ): Promise<IRenderer<any>> {
-    const tournamentUrlContent = tournamentSlug.split('-');
-    const tournamentId = tournamentUrlContent[tournamentUrlContent.length - 1];
-    const { data } = await this.tournamentService.getTournamentById(
-      tournamentId,
-    );
+    try {
+      const tournamentUrlContent = tournamentSlug.split('-');
+      const tournamentId =
+        tournamentUrlContent[tournamentUrlContent.length - 1];
+      const { data } = await this.tournamentService.getTournamentById(
+        tournamentId,
+      );
 
-    // check rules:
-    if (data && data.rules && data.rules.includes('\n')) {
-      data.rules = data.rules.split('\n');
-    } else {
-      data.rules = [data.rules];
+      // if data not found
+      if (!Object.keys(data).length) {
+        throw new NotFoundException();
+      }
+
+      // check rules:
+      if (data && data.rules && data.rules.includes('\n')) {
+        data.rules = data.rules.split('\n');
+      } else {
+        data.rules = [data.rules];
+      }
+
+      return {
+        locale,
+        route: TOURNAMENT_ROUTES.TOURNAMENTS,
+        request,
+        data: {
+          ...this.getLocaleData(TOURNAMENT_ROUTES.TOURNAMENTS, locale),
+          ...data,
+        },
+      };
+    } catch (e) {
+      throw new NotFoundException();
     }
-
-    return {
-      locale,
-      route: TOURNAMENT_ROUTES.TOURNAMENTS,
-      request,
-      data: {
-        ...this.getLocaleData(TOURNAMENT_ROUTES.TOURNAMENTS, locale),
-        ...data,
-      },
-    };
   }
 }

@@ -6,13 +6,16 @@ export class TournamentsList {
       tournamentObj && tournamentObj.data && tournamentObj.data.tournaments
         ? tournamentObj.data.tournaments
         : [];
-    this.success = tournamentObj.success ? tournamentObj.success : false;
+    this.success =
+      tournamentObj && tournamentObj.success ? tournamentObj.success : false;
     this.data = tournaments.length
       ? tournaments.reduce((tournamnetsData, tournamnet) => {
           if (gamesMap && gamesMap[tournamnet.game_id]) {
             tournamnetsData.push(
               new Tournament(tournamnet, locale, gamesMap[tournamnet.game_id]),
             );
+          } else {
+            // console.log(tournamnet.game_id, ':::not found');
           }
           return tournamnetsData;
         }, [])

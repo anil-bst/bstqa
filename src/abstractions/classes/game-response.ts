@@ -25,49 +25,64 @@ export class GameResponse {
     this.totalRating = game ? game.totalRating : '';
     this.avgRating = game ? game.avgRating : '';
     this.media = {
-      mobile: {
-        logoUrl:
-          game && game.media && game.media.mobile
-            ? game.media.mobile['logoUrl']['en']
-            : '',
-        bannerUrl:
-          game && game.media && game.media.mobile
-            ? game.media.mobile['bannerUrl']['en']
-            : '',
-        stretchImageUrl:
-          game && game.media && game.media.mobile
-            ? game.media.mobile['stretchImageUrl']['en']
-            : '',
-      },
-      desktop: {
-        logoUrl:
-          game && game.media && game.media.desktop
-            ? game.media.desktop['logoUrl']['en']
-            : '',
-        bannerUrl:
-          game && game.media && game.media.desktop
-            ? game.media.desktop['bannerUrl']['en']
-            : '',
-        stretchImageUrl:
-          game && game.media && game.media.desktop
-            ? game.media.desktop['stretchImageUrl']['en']
-            : '',
-      },
-      default: {
-        logoUrl:
-          game && game.media && game.media.default
-            ? game.media.default['logoUrl']['en']
-            : '',
-        bannerUrl:
-          game && game.media && game.media.default
-            ? game.media.default['bannerUrl']['en']
-            : '',
-        stretchImageUrl:
-          game && game.media && game.media.default
-            ? game.media.default['stretchImageUrl']['en']
-            : '',
-      },
+      mobile: { logoUrl: '', bannerUrl: '', stretchImageUrl: '', iconUrl: '' },
+      desktop: { logoUrl: '', bannerUrl: '', stretchImageUrl: '', iconUrl: '' },
+      default: { logoUrl: '', bannerUrl: '', stretchImageUrl: '', iconUrl: '' },
     };
+    if (game && game.media && game.media.mobile) {
+      if (game.media.mobile['logoUrl']) {
+        this.media.mobile['logoUrl'] = game.media.mobile['logoUrl']['en'] || '';
+      }
+      if (game.media.mobile['bannerUrl']) {
+        this.media.mobile['bannerUrl'] =
+          game.media.mobile['bannerUrl']['en'] || '';
+      }
+      if (game.media.mobile['stretchImageUrl']) {
+        this.media.mobile['stretchImageUrl'] =
+          game.media.mobile['stretchImageUrl']['en'] || '';
+      }
+      if (game.media.mobile['iconUrl']) {
+        this.media.mobile['iconUrl'] = game.media.mobile['iconUrl']['en'] || '';
+      }
+    }
+
+    if (game && game.media && game.media.desktop) {
+      if (game.media.desktop['logoUrl']) {
+        this.media.desktop['logoUrl'] =
+          game.media.desktop['logoUrl']['en'] || '';
+      }
+      if (game.media.desktop['bannerUrl']) {
+        this.media.desktop['bannerUrl'] =
+          game.media.desktop['bannerUrl']['en'] || '';
+      }
+      if (game.media.desktop['stretchImageUrl']) {
+        this.media.desktop['stretchImageUrl'] =
+          game.media.desktop['stretchImageUrl']['en'] || '';
+      }
+      if (game.media.desktop['iconUrl']) {
+        this.media.desktop['iconUrl'] =
+          game.media.desktop['iconUrl']['en'] || '';
+      }
+    }
+
+    if (game && game.media && game.media.default) {
+      if (game.media.default['logoUrl']) {
+        this.media.default['logoUrl'] =
+          game.media.default['logoUrl']['en'] || '';
+      }
+      if (game.media.default['bannerUrl']) {
+        this.media.default['bannerUrl'] =
+          game.media.default['bannerUrl']['en'] || '';
+      }
+      if (game.media.default['stretchImageUrl']) {
+        this.media.default['stretchImageUrl'] =
+          game.media.default['stretchImageUrl']['en'] || '';
+      }
+      if (game.media.default['iconUrl']) {
+        this.media.default['iconUrl'] =
+          game.media.default['iconUrl']['en'] || '';
+      }
+    }
     this.tournamentTypes =
       game && game.tournamentTypes
         ? game.tournamentTypes.map(type => {

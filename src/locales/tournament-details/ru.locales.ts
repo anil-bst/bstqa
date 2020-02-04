@@ -1,4 +1,8 @@
 import { ITournamentDetailLocale } from '@app/abstractions';
+import { HowToJoinRussian } from './../how-to-join/ru.locales';
+import { SupportedLocalesEnum } from '@app/enums';
+const language = SupportedLocalesEnum.RUSSIAN;
+
 export const TournamentDetailLocaleRussian: ITournamentDetailLocale = {
   metadata: {
     title: 'License Agreement - Game.tv',
@@ -17,17 +21,11 @@ export const TournamentDetailLocaleRussian: ITournamentDetailLocale = {
     detailsSectionHeading: 'Details',
     ruleSectionHeading: 'Rules',
     howToJoinSection: {
-      heading: 'Как принять участие в турнире {{tournamentName}}?',
-      content: [
-        'Перейдите на текстовый канал #tournament-info в Discord, чтобы узнать подробности о турнире.',
-        'Нажмите на #tournament-lobby в нижней части канала #tournament-info',
-        'Для участия в турнире введите команду !register на канале #tournament-lobby',
-        'Бот Tourney отправит вам личное сообщение; наберите !joinsolo &lt;ваш игровой никнейм> в ЛС',
-        'Вы успешно зарегистрировались на турнир {{tournamentName}}.',
-      ],
-      imgUrl: 'https://cdn.game.tv/game-page/join-tournament/discord/1.jpg',
+      heading: 'Как принять участие в турнире {{howToJoinTitle}}?',
+      blocks: HowToJoinRussian.blocks,
     },
     prizeSectionHeading: 'Prize',
   },
   organiserText: 'Organised by',
+  locales: `/${language}`,
 };

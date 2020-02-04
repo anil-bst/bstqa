@@ -1,6 +1,7 @@
 // tslint:disable: object-literal-key-quotes
 import { ILocales, ITournamentDetailLocale } from '@app/abstractions';
 import { TournamentDetailLocaleEnglish } from './en.locales';
+import { TournamentDetailLocaleJapanese } from './ja.locales';
 import { TournamentDetailLocaleKorean } from './ko.locales';
 import { TournamentDetailLocaleArabic } from './ar.locales';
 import { TournamentDetailLocaleGerman } from './de.locales';
@@ -16,8 +17,7 @@ import { TournamentDetailLocaleVietnamese } from './vi.locales';
 
 export const TournamentDetailsLocales: ILocales<ITournamentDetailLocale> = {
   en: TournamentDetailLocaleEnglish,
-  ja: TournamentDetailLocaleEnglish,
-
+  ja: TournamentDetailLocaleJapanese,
   ko: TournamentDetailLocaleKorean,
   ar: TournamentDetailLocaleArabic,
   cs: TournamentDetailLocaleEnglish,

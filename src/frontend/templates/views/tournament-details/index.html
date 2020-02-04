@@ -21,7 +21,7 @@
             </section>
             <section class='tournament-detail-info-section'>
                 <div class='container'>
-                    <div class='link-to-tournaments'>{{linkToAllTournaments}}</div>
+                    <div class='link-to-tournaments'><a href='{{locales}}/find-tournament'>{{linkToAllTournaments}}</a></div>
                     <div class='row'>
                         <div class='tournament-image col-3'>
                             <figure>
@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                                 <div class='col-5'>
-                                    <div class=' prize-wrapper'>
+                                    <div class='prize-wrapper {{CheckPrizeIsDefault prizes}}'>
                                         <figure class='prize-icon'>
                                             <img src='https://cdn.game.tv/images/tournament-details/trophy-icon.png' alt='trophy icon' />
                                         </figure>
@@ -61,7 +61,12 @@
                             </div>
                             <div class='register-wrapper'>
                                 <span class='register-heading'>{{registerSection.heading}}</span>
-                                <div class='register-btn-wrapper'><button>{{registerSection.btnText}}</button> <div class='organiser-wrapper'>{{organiserText}} <span class='bold'>{{createdBy.userName}}</span></div></div>
+                                <div class='register-btn-wrapper'>
+                                    <a href="{{CheckDiscordPlateform platform discordUrl pwaUrl}}" class='btn'>
+                                        {{registerSection.btnText}}
+                                    </a>
+                                    <div class='organiser-wrapper'>{{organiserText}} <span class='bold'>{{createdBy.userName}}</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,20 +102,37 @@
                     </div>
                     {{#with details.howToJoinSection}}
                     <div class='how-to-join-wrapper'>
-                        <h3 class='heading'>{{heading}}</h3>
-                        <div class='row'>
-                            <div class='col-6'>
-                                <ul class='how-to-join-content'>
-                                    {{#each content}}
-                                        <li class='content'>{{this}}</li>
-                                    {{/each}}
-                                </ul>
+                        <h3 class='heading'>{{TemplateStringReplace heading 'howToJoinTitle' ../name}}</h3>
+                        <ul class="join-tournament-list">
+                        {{#each blocks}}
+                        <li class="join-item {{CheckPlatformType ../../platform type }}" id="how_to_join_step_{{@index}}">
+                            <p class="steps">
+                            {{gamePlatform}}
+                            <span class="steps-h">{{stepsHeading}}</span>
+                            </p>
+                            <div class="steps-desc">
+                            <ul class="steps-list">
+                                {{#each stepsContent}}
+                                <li class="step-item {{#unless @index}}active{{/unless}}">
+                                <p class="step-content">
+                                    {{#with (TemplateStringReplace stepItem 'howToJoinTitle' ../../name) as |stepItemContent|}}
+                                    {{{stepItemContent}}}
+                                    {{/with}}
+                                </p>
+                                <figure class="step-image">
+                                    <img src="{{imgUrl}}" />
+                                </figure>
+                                </li>
+                                {{/each}}
+                            </ul>
+                            <figure class="steps-image-section">
+                                <img src={{firstImage}}>
+                            </figure>
                             </div>
-                            
-                            <div class='image-wrapper col-6'>
-                                <figure><img src={{imgUrl}} alt='how to join image'/></figure>
-                            </div>
-                        </div>
+            
+                        </li>
+                        {{/each}}
+                        </ul>
                     </div>
                     {{/with}}
                     <div id='prize' name='prize' class='prize-content-wrapper'>
@@ -122,6 +144,6 @@
         </div>
     </div>
     {{> common/footer footer}}
-    <script src='/node-static/js/common/main.js'></script>
+    <script src="/node-static/js/tournament-details/main.js"></script>
 </body>
 {{/with}}

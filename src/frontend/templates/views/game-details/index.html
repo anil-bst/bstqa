@@ -100,7 +100,7 @@
                   {{#each stepsContent}}
                   <li class="step-item {{#unless @index}}active{{/unless}}">
                     <p class="step-content">
-                      {{#with (TemplateStringReplace stepItem 'gameName' ../../game.name) as |stepItemContent|}}
+                      {{#with (TemplateStringReplace stepItem 'howToJoinTitle' ../../game.name) as |stepItemContent|}}
                       {{{stepItemContent}}}
                       {{/with}}
                     </p>

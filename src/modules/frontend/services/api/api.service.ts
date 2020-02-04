@@ -102,7 +102,7 @@ export class ApiService {
     limit = 12,
     locale = 'en',
     cursor = '',
-    gamePkg = '',
+    gameId = '',
   ): Promise<ITournament[]> {
     try {
       const resp = await this.tournamentService.getTournaments({
@@ -112,15 +112,17 @@ export class ApiService {
         locale,
         geo: 'all',
         lang: 'all',
-        game_pkg: gamePkg,
+        game_id: gameId,
+        is_count_required: true,
       });
+
       if (resp && resp.data) {
         resp.data.forEach(item => {
           item.registrationStartDate = new Date(
-            parseInt(item.registrationStartDate, 10),
+            parseInt(item.registrationStartDate, 10)*1000,
           );
           item.tournamentStartDate = new Date(
-            parseInt(item.tournamentStartDate, 10),
+            parseInt(item.tournamentStartDate, 10)*1000,
           );
         });
       }

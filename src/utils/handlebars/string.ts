@@ -6,7 +6,9 @@ function replaceTemplateString(
   replace: string,
 ) {
   const replaceRegex = new RegExp(`{{${current}}}`, `gm`);
-  return template.replace(replaceRegex, replace);
+  if (template) {
+    return template.replace(replaceRegex, replace);
+  }
 }
 
 function sliceString(
@@ -36,11 +38,13 @@ function stringModifyForLDJson(
 }
 
 function uppercaseStr(str) {
-  return str.toUpperCase();
+  if (str) {
+    return str.toUpperCase();
+  }
 }
 
 function checkLocale(locale) {
-  if (locale.toLowerCase() === 'en') {
+  if (locale && locale.toLowerCase() === 'en') {
     return '';
   } else {
     return '/' + locale;
@@ -55,6 +59,43 @@ function showSeeMore(content) {
   return 'hide';
 }
 
+function checkDiscordPlateform(platform, discordUrl, pwaUrl) {
+  if (platform && platform.toLowerCase() === 'discord') {
+    return discordUrl;
+  }
+  return pwaUrl;
+}
+
+function showEmptyState(count, data) {
+  if (count || (data && data.length)) {
+    return '';
+  }
+  return 'show';
+}
+
+function checkPlatformType(pl1, pl2) {
+  const platformType = pl1 && pl1.toLowerCase();
+  const howToJoinSectionPlatform = pl2 && pl2.toLowerCase();
+  if (
+    platformType &&
+    howToJoinSectionPlatform &&
+    platformType === howToJoinSectionPlatform
+  ) {
+    return 'show';
+  }
+  return 'hide';
+}
+
+function checkPrizeIsDefault(prize) {
+  let isDefault = false;
+  if (prize) {
+    const str = prize.replace(/\s/g, '').toLowerCase();
+    isDefault = str === 'pleasecontactserveradmin' || str === 'n/a';
+  }
+
+  return isDefault ? 'hide' : 'show';
+}
+
 export const StringHelpers = {
   TemplateStringReplace: replaceTemplateString,
   StringSlice: sliceString,
@@ -64,4 +105,8 @@ export const StringHelpers = {
   ShowSeeMore: showSeeMore,
   GetTournamentUrl: ApiService.getTournamentUrl,
   CheckLocale: checkLocale,
+  CheckDiscordPlateform: checkDiscordPlateform,
+  ShowEmptyState: showEmptyState,
+  CheckPlatformType: checkPlatformType,
+  CheckPrizeIsDefault: checkPrizeIsDefault,
 };
