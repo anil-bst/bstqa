@@ -1,13 +1,3 @@
-# This workflow will build a docker container, publish it to Google Container Registry, and deploy it to GKE.
-#
-# To configure this workflow:
-#
-# 1. Ensure that your repository contains the necessary configuration for your Google Kubernetes Engine cluster, including deployment.yml, kustomization.yml, service.yml, etc.
-#
-# 2. Set up secrets in your workspace: GKE_PROJECT with the name of the project, GKE_EMAIL with the service account email, GKE_KEY with the Base64 encoded JSON service account key (https://github.com/GoogleCloudPlatform/github-actions/tree/docs/service-account-key/setup-gcloud#inputs).
-#
-# 3. Change the values for the GKE_ZONE, GKE_CLUSTER, IMAGE, REGISTRY_HOSTNAME and DEPLOYMENT_NAME environment variables (below).
-
 name: Build and Deploy to GKE
 
 on:
@@ -25,7 +15,7 @@ env:
   GKE_CLUSTER: qa-gametv
   IMAGE: node:dubnium-jessie
   REGISTRY_HOSTNAME: gcr.io
-  DEPLOYMENT_NAME: qa-frontend-test
+  DEPLOYMENT_NAME: qa-gametv-app
   CLOUDSDK_PYTHON_SITEPACKAGES: 1
 
 
@@ -74,39 +64,18 @@ jobs:
       run: sudo chmod 777 -R $HOME/.kube/config
     - name: Check Config
       run: sudo kubectl config view
-    - name: Deploy
-      run: |
-        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --insecure-skip-tls-verify=true
     - name: Build
       run: |        
-        docker build --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" --build-arg ENVIRONMENT=qa --build-arg MONGO_URI=mongodb+srv://gametvqa:pxnT6fZ3VSiIvWRw@qa-gametv-kjpap.gcp.mongodb.net/game-tv-v1 --build-arg PRIVATE_API_TOKEN=zUINSip5RwM6QWgOrcaoqWsra3nQITK --build-arg REDIS_HOST=35.223.116.199 --build-arg REDIS_PORT=6379 --build-arg REDIS_DB=0 -t gcr.io/game-tv-website-qa/qa-frontend-test:v6 --no-cache .
+        docker build --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" --build-arg ENVIRONMENT=qa --build-arg MONGO_URI=mongodb+srv://gametvqa:pxnT6fZ3VSiIvWRw@qa-gametv-kjpap.gcp.mongodb.net/game-tv-v1 --build-arg PRIVATE_API_TOKEN=zUINSip5RwM6QWgOrcaoqWsra3nQITK --build-arg REDIS_HOST=35.223.116.199 --build-arg REDIS_PORT=6379 --build-arg REDIS_DB=0 -t gcr.io/game-tv-website-qa/qa-gametv-app:v2 --no-cache .
 
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
-        docker push gcr.io/game-tv-website-qa/qa-frontend-test:v6
-        
-    # Set up kustomize
-    #- name: Set up Kustomize
-    #  run: |
-    #   curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-    #   chmod u+x ./kustomize
-    #- name: Export KUBECONFIG
-    #  run: sudo cp ./config ~/.kube/config
-    #- name: Check Config Content 
-    #  run: sudo cat ~/.kube/config
-    #- name: Assign Permission to KUBECONFIG
-    #  run: sudo chmod 777 -R ~/.kube/config
-    #- name: Check Config
-    #  run: sudo kubectl config view
+        docker push gcr.io/game-tv-website-qa/qa-gametv-app:v2
     
-
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-frontend-test:v6 --insecure-skip-tls-verify=true
-      #gcloud container clusters get-credentials $GKE_CLUSTER --zone $GKE_ZONE --project $GKE_PROJECT
-      #./kustomize edit set image gcr.io/game-tv-website-qa/qa-frontend-test:v6
-      #./kustomize build . | kubectl apply -f -      
-       # kubectl get services -o wide
+        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-gametv-app:v2 --insecure-skip-tls-verify=true
+      
     
