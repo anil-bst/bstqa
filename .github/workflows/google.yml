@@ -76,6 +76,6 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        sudo kubectl set image deployment/qa-frontend-test qa-frontend-test=gcr.io/game-tv-website-qa/qa-gametv-app:v2 --insecure-skip-tls-verify=true
+        sudo kubectl set image deployment/qa-gametv-app qa-gametv-app=gcr.io/game-tv-website-qa/qa-gametv-app:v2 --insecure-skip-tls-verify=true
       
     
