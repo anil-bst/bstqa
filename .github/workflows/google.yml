@@ -8,7 +8,7 @@ on:
 # Environment variables available to all jobs and steps in this workflow
 env:
   KUBECONFIG: /root/config
-  BUILD_NUMBER: qa-gametv-${{ git log -1 | head -1 | awk '{print $2}' }}
+  BUILD_NUMBER: qa-gametv-v8
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
