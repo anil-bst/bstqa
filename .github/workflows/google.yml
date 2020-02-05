@@ -73,11 +73,13 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
+        export COMMITID=$(git log -1 | head -1 | awk '{print $2}')
         docker push gcr.io/game-tv-website-qa/$BUILD_NAME$COMMITID
     
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
+        export COMMITID=$(git log -1 | head -1 | awk '{print $2}')
         sudo kubectl set image deployment/qa-gametv-app qa-gametv-app=gcr.io/game-tv-website-qa/$BUILD_NAME$COMMITID --insecure-skip-tls-verify=true
       
     
