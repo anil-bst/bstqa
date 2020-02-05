@@ -68,18 +68,18 @@ jobs:
     - name: Build
       run: |  
         export COMMITID=$(git log -1 | head -1 | awk '{print $2}')      
-        docker build --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" --build-arg ENVIRONMENT=qa --build-arg MONGO_URI=mongodb+srv://gametvqa:pxnT6fZ3VSiIvWRw@qa-gametv-kjpap.gcp.mongodb.net/game-tv-v1 --build-arg PRIVATE_API_TOKEN=zUINSip5RwM6QWgOrcaoqWsra3nQITK --build-arg REDIS_HOST=35.223.116.199 --build-arg REDIS_PORT=6379 --build-arg REDIS_DB=0 -t gcr.io/game-tv-website-qa/$BUILD_NAME$COMMITID --no-cache .
+        docker build --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF" --build-arg ENVIRONMENT=qa --build-arg MONGO_URI=mongodb+srv://gametvqa:pxnT6fZ3VSiIvWRw@qa-gametv-kjpap.gcp.mongodb.net/game-tv-v1 --build-arg PRIVATE_API_TOKEN=zUINSip5RwM6QWgOrcaoqWsra3nQITK --build-arg REDIS_HOST=35.223.116.199 --build-arg REDIS_PORT=6379 --build-arg REDIS_DB=0 -t gcr.io/game-tv-website-qa/$BUILD_NAME__$COMMITID --no-cache .
 
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
         export COMMITID=$(git log -1 | head -1 | awk '{print $2}')
-        docker push gcr.io/game-tv-website-qa/$BUILD_NAME$COMMITID
+        docker push gcr.io/game-tv-website-qa/$BUILD_NAME__$COMMITID
     
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
         export COMMITID=$(git log -1 | head -1 | awk '{print $2}')
-        sudo kubectl set image deployment/qa-gametv-app qa-gametv-app=gcr.io/game-tv-website-qa/$BUILD_NAME$COMMITID --insecure-skip-tls-verify=true
+        sudo kubectl set image deployment/qa-gametv-app qa-gametv-app=gcr.io/game-tv-website-qa/$BUILD_NAME__$COMMITID --insecure-skip-tls-verify=true
       
     
