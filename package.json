@@ -74,7 +74,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.3",
     "sitemap": "^5.1.0",
-    "swiper": "^5.2.1"
+    "swiper": "^6.5.1"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.10.7",
